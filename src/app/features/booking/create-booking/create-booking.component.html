@@ -1,1 +1,11 @@
 <p>Booking details here</p>
+<!-- <div *ngIf="users$ | async as users"> -->
+<div *ngIf="events !== null">
+  <h2>All Users</h2>
+  <ul>
+    <li *ngFor="let event of events">
+      {{ event.eventDetails.eventName }} - {{ event.userName }}
+    </li>
+  </ul>
+  <h4></h4>
+</div>
