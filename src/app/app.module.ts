@@ -9,6 +9,8 @@ import interactionPlugin from '@fullcalendar/interaction';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import { CreateBookingComponent } from './features/booking/create-booking/create-booking.component';
 import { ScheduleComponent } from './features/booking/schedule/schedule.component';
+import { LoginComponent } from './features/login/login.component';
+import { SigninComponent } from './features/signin/signin.component';
 
 // register FullCalendar plugins
 FullCalendarModule.registerPlugins([
@@ -18,7 +20,7 @@ FullCalendarModule.registerPlugins([
 ]);
 
 @NgModule({
-  declarations: [AppComponent, CreateBookingComponent, ScheduleComponent],
+  declarations: [AppComponent, CreateBookingComponent, ScheduleComponent, LoginComponent, SigninComponent],
   imports: [BrowserModule, AppRoutingModule, FullCalendarModule],
   providers: [],
   bootstrap: [AppComponent],
