@@ -1,0 +1,32 @@
+<div class="sidenav">
+    <div class="login-main-text">
+       <h2>Eazy-Booking<br> <h3>Slot Booking Section</h3></h2>
+       <p>Here you can book your <br>Conference room's timing.</p>
+    </div>
+ </div>
+ <div class="main">
+    <div class="col-md-6 col-sm-12">
+       <div class="login-form">
+          <form>
+             <div class="form-group">
+                <label>Event Title</label>
+                <input type="text" class="form-control" placeholder="Event Title.....">
+             </div>
+             <div class="form-group">
+                <label for="appt">Choose Start time for your Meeting:</label>
+                <input type="time" id="appt" class="form-control" min="09:00" max="18:00"required>
+             </div>
+             <div class="form-group">
+                <label for="appt">Choose End time for your Meeting:</label>
+                <input type="time" id="appt" class="form-control" min="09:00" max="18:00"required>
+                <small>Office hours are 9am to 6pm</small>
+             </div>
+             <button type="submit" class="btn btn-black">Submit</button>
+             <button type="submit" class="btn btn-secondary">Cancel</button>
+             <br>
+             <hr>
+             <span class="sss">Do you want to see schedule ? <a routerLink="/schedule">schedule</a></span>
+          </form>
+       </div>
+    </div>
+ </div>
