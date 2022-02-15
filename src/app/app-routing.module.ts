@@ -4,16 +4,20 @@ import { ScheduleComponent } from './features/booking/schedule/schedule.componen
 import { EventsComponent } from './features/events/events.component';
 import { LoginComponent } from './features/login/login.component';
 import { SigninComponent } from './features/signin/signin.component';
+import { RoomAddComponent } from './features/room/room-add/room-add.component';
+import { RoomEditComponent } from './features/room/room-edit/room-edit.component';
 
 const routes: Routes = [
   { path: 'signin', component: SigninComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'schedule',component:ScheduleComponent},
-  { path: 'events',component: EventsComponent}
+  { path: 'schedule', component: ScheduleComponent },
+  { path: 'events', component: EventsComponent },
+  { path: 'room-add', component: RoomAddComponent },
+  { path: 'room-edit', component: RoomEditComponent },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
