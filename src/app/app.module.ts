@@ -11,6 +11,9 @@ import { CreateBookingComponent } from './features/booking/create-booking/create
 import { ScheduleComponent } from './features/booking/schedule/schedule.component';
 import { LoginComponent } from './features/login/login.component';
 import { SigninComponent } from './features/signin/signin.component';
+import { RoomAddComponent } from './features/room/room-add/room-add.component';
+import { RoomEditComponent } from './features/room/room-edit/room-edit.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 // register FullCalendar plugins
 FullCalendarModule.registerPlugins([
@@ -20,8 +23,8 @@ FullCalendarModule.registerPlugins([
 ]);
 
 @NgModule({
-  declarations: [AppComponent, CreateBookingComponent, ScheduleComponent, LoginComponent, SigninComponent],
-  imports: [BrowserModule, AppRoutingModule, FullCalendarModule],
+  declarations: [AppComponent, CreateBookingComponent, ScheduleComponent, LoginComponent, SigninComponent, RoomAddComponent, RoomEditComponent],
+  imports: [BrowserModule, AppRoutingModule, FullCalendarModule, NgbModule],
   providers: [],
   bootstrap: [AppComponent],
 })
