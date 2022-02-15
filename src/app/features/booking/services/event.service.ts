@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { io, Socket } from 'socket.io-client';
 import { webSocket, WebSocketSubject } from 'rxjs/webSocket';
 import { catchError, tap, switchAll } from 'rxjs/operators';
 import { EMPTY } from 'rxjs';
@@ -8,55 +9,56 @@ import { Observable, Subject } from 'rxjs';
   providedIn: 'root',
 })
 export class EventService {
-  WS_ENDPOINT = 'ws://localhost:5050';
-  private socket$: WebSocketSubject<any>;
-  private messagesSubject$ = new Subject<any>();
-  public messages$: Observable<any> = this.messagesSubject$.pipe(
-    catchError((e) => {
-      throw e;
-    })
-  );
+  WS_ENDPOINT_REMOTE = 'https://eazy-booking-staging.herokuapp.com';
+
+  WS_ENDPOINT_LOCAL = 'http://localhost:5000';
+
   ws: any;
+  socket: any;
   constructor() {
-    // this.socket$ = this.getNewWebSocket();
-    this.socket$ = webSocket('ws://localhost:5050');
-    console.log(this.socket$);
+    // this.ws = new WebSocket(this.WS_ENDPOINT_LOCAL);
+    // this.ws = new WebSocket(this.WS_ENDPOINT_REMOTE);
+    // console.log(this.ws);
 
-    this.ws = new WebSocket(this.WS_ENDPOINT);
-    this.ws.onmessage = (data: any) => {
-      console.log(data.data);
-    };
-    this.ws.onclose = (data: any) => {
-      console.log('Disconnected');
-    };
+    // this.ws.onopen = () => {
+    //   console.log('Open');
+    // };
+    // this.ws.onmessage = (data: any) => {
+    //   console.log(JSON.parse(data.data).data);
+    // };
+    // this.ws.onerror = (err: any) => {
+    //   console.log('Something went wrong - ', err);
+    // };
+    // this.ws.onclose = (data: any) => {
+    //   console.log('Disconnected');
+    // };
+
+    this.socket = io(this.WS_ENDPOINT_REMOTE);
+
+    this.socket.on('NEW_CONNECTION', (data: any) => {
+      console.log(data);
+    });
+
+    this.socket.on('BROADCAST', (data: any) => {
+      console.log(data);
+    });
   }
 
-  public connect(): void {
-    if (!this.socket$ || this.socket$.closed) {
-      this.socket$ = this.getNewWebSocket();
-      console.log(this.socket$);
-      // const messages: any = this.socket$.pipe(
-      //   tap({
-      //     error: (error) => console.log(error),
-      //   }),
-      //   catchError((_) => EMPTY)
-      // );
-      // this.messagesSubject$.next(messages);
-    }
-    const messages: any = this.socket$.pipe(
-      tap({
-        error: (error) => console.log(error),
-      }),
-      catchError((_) => EMPTY)
-    );
-    this.messagesSubject$.next(messages);
+  onLatestEvents() {
+    return new Observable((observer) => {
+      this.socket.on('LATEST_EVENTS', (data: any) => {
+        console.log(data);
+        observer.next(data);
+      });
+    });
   }
 
-  private getNewWebSocket() {
-    return webSocket(this.WS_ENDPOINT);
-  }
-
-  close() {
-    this.socket$.complete();
+  onLatestRooms() {
+    return new Observable((observer) => {
+      this.socket.on('LATEST_ROOMS', (data: any) => {
+        console.log(data);
+        observer.next(data);
+      });
+    });
   }
 }
