@@ -24,6 +24,7 @@
     "@fullcalendar/interaction": "^5.10.1",
     "@fullcalendar/timegrid": "^5.10.1",
     "@ng-bootstrap/ng-bootstrap": "^10.0.0",
+    "boostrap": "^2.0.0",
     "bootstrap": "^4.5.0",
     "rxjs": "~6.6.0",
     "tslib": "^2.3.0",

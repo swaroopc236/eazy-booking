@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CalendarOptions } from '@fullcalendar/angular';
 import { BookingService } from '../services/booking.service';
+import { Router } from '@angular/router';
+import { EventsComponent } from '../../events/events.component';
 
 @Component({
   selector: 'app-schedule',
@@ -17,9 +19,13 @@ export class ScheduleComponent implements OnInit {
     initialView: 'timeGridDay',
   };
 
-  constructor(private bookingService: BookingService) {
+  constructor(private bookingService: BookingService,private router: Router) {
     this.calendarOptions.events = this.bookingService.getEvents();
   }
 
   ngOnInit(): void {}
+
+  navi(){
+    this.router.navigateByUrl('/events');
+  }
 }
