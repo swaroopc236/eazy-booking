@@ -8,9 +8,10 @@ import { RoomAddComponent } from './features/room/room-add/room-add.component';
 import { RoomEditComponent } from './features/room/room-edit/room-edit.component';
 
 const routes: Routes = [
+  { path: '', redirectTo: 'schedule', pathMatch: 'full' },
+  { path: 'schedule', component: ScheduleComponent },
   { path: 'signin', component: SigninComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'schedule', component: ScheduleComponent },
   { path: 'events', component: EventsComponent },
   { path: 'room-add', component: RoomAddComponent },
   { path: 'room-edit', component: RoomEditComponent },
