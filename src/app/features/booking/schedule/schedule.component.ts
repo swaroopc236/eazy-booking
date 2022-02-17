@@ -19,13 +19,17 @@ export class ScheduleComponent implements OnInit {
     initialView: 'timeGridDay',
   };
 
-  constructor(private bookingService: BookingService,private router: Router) {
+  constructor(private bookingService: BookingService, private router: Router) {
     this.calendarOptions.events = this.bookingService.getEvents();
   }
 
   ngOnInit(): void {}
 
-  navi(){
+  navigateToEvents() {
     this.router.navigateByUrl('/events');
+  }
+
+  navigateToAdmin() {
+    this.router.navigateByUrl('/admin');
   }
 }

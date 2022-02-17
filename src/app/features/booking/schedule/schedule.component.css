@@ -3,7 +3,17 @@
 }
 
 button {
-  display: block;
-  margin-left: auto;
-  margin-right: 0;
+  background-color: #000 !important;
+  float: right;
+}
+.btn-black {
+  background-color: #000 !important;
+  color: #fff;
+}
+
+.right-side-button {
+  float: right;
+}
+.navbar-header {
+  width: 100%;
 }
