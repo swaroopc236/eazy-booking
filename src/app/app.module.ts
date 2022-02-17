@@ -15,6 +15,7 @@ import { EventsComponent } from './features/events/events.component';
 import { RoomAddComponent } from './features/room/room-add/room-add.component';
 import { RoomEditComponent } from './features/room/room-edit/room-edit.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { AdminPageComponent } from './features/admin-page/admin-page.component';
 
 // register FullCalendar plugins
 FullCalendarModule.registerPlugins([
@@ -33,6 +34,7 @@ FullCalendarModule.registerPlugins([
     EventsComponent,
     RoomAddComponent,
     RoomEditComponent,
+    AdminPageComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, FullCalendarModule, NgbModule],
   providers: [],
