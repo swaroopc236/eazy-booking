@@ -8,10 +8,10 @@
     <button class="btn btn-black" type="submit" (click)="navigateToEvents()">
       Add Events
     </button>
+    <button class="btn btn-danger" (click)="logoutUser()">Logout</button>
   </div>
 </nav>
 
 <div class="calendar-container">
   <full-calendar [options]="calendarOptions"></full-calendar>
-  <button class="btn btn-danger" (click)="logoutUser()">Logout</button>
 </div>
