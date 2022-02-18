@@ -8,6 +8,7 @@ import { CookieService } from 'ngx-cookie-service';
 })
 export class AuthService implements CanActivate {
   private USERS_URL = 'https://eazy-booking-staging.herokuapp.com/users';
+  // private USERS_URL = 'http://localhost:5000/users';
 
   constructor(
     private http: HttpClient,
@@ -16,17 +17,20 @@ export class AuthService implements CanActivate {
   ) {}
 
   loginUser(userDetails: any) {
-    console.log(userDetails);
-    return this.http.post(`${this.USERS_URL}/login`, userDetails);
+    return this.http.post(`${this.USERS_URL}/login`, userDetails, {
+      withCredentials: true,
+    });
   }
 
   logoutUser() {
-    return this.http.get(`${this.USERS_URL}/logout`);
+    return this.http.get(`${this.USERS_URL}/logout`, { withCredentials: true });
   }
 
   signupUser(userDetails: any) {
     console.log(userDetails);
-    return this.http.post(`${this.USERS_URL}/signup`, userDetails);
+    return this.http.post(`${this.USERS_URL}/signup`, userDetails, {
+      withCredentials: true,
+    });
   }
 
   isAuthenticated(): boolean {
