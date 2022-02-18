@@ -9,7 +9,13 @@ import interactionPlugin from '@fullcalendar/interaction';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import { CreateBookingComponent } from './features/booking/create-booking/create-booking.component';
 import { ScheduleComponent } from './features/booking/schedule/schedule.component';
-import { CommonModule } from '@angular/common';
+import { LoginComponent } from './features/login/login.component';
+import { SigninComponent } from './features/signin/signin.component';
+import { EventsComponent } from './features/events/events.component';
+import { RoomAddComponent } from './features/room/room-add/room-add.component';
+import { RoomEditComponent } from './features/room/room-edit/room-edit.component';
+import { ReactiveFormsModule } from '@angular/forms';
+// import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 // register FullCalendar plugins
 FullCalendarModule.registerPlugins([
@@ -19,12 +25,21 @@ FullCalendarModule.registerPlugins([
 ]);
 
 @NgModule({
-  declarations: [AppComponent, CreateBookingComponent, ScheduleComponent],
+  declarations: [
+    AppComponent,
+    CreateBookingComponent,
+    ScheduleComponent,
+    LoginComponent,
+    SigninComponent,
+    EventsComponent,
+    RoomAddComponent,
+    RoomEditComponent,
+  ],
   imports: [
     BrowserModule,
-    CommonModule,
     AppRoutingModule,
     FullCalendarModule,
+    ReactiveFormsModule,
     HttpClientModule,
   ],
   providers: [],
