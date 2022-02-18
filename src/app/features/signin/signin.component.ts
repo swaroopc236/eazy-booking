@@ -61,11 +61,13 @@ export class SigninComponent implements OnInit {
       this.userDetails.emailId = this.signupForm.value['emailId'];
       this.authService.signupUser(this.userDetails).subscribe(
         (data: any) => {
-          console.log(data);
-          // this.cookieService.set('user', JSON.stringify(data.data[0]));
+          // console.log(data);
+          this.cookieService.set('user', JSON.stringify(data.data[0]), {
+            expires: 3,
+          });
           this.router.navigate(['login']);
         },
-        (err) => {
+        (err: any) => {
           console.log('Error while registering', err);
         }
       );
