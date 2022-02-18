@@ -16,12 +16,14 @@ export class LoginComponent implements OnInit {
     emailId: '',
     password: '',
   };
+  returnUrl: string = '/schedule';
 
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
     private cookieService: CookieService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) {
     this.loginForm = this.fb.group({
       emailId: ['', [Validators.required]],
@@ -29,7 +31,10 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.returnUrl =
+      this.route.snapshot.queryParams['returnUrl'] || '/schedule';
+  }
 
   get emailId() {
     return this.loginForm.get('emailId');
@@ -44,8 +49,10 @@ export class LoginComponent implements OnInit {
     this.authService.loginUser(this.userDetails).subscribe(
       (data: any) => {
         console.log(data);
-        this.cookieService.set('user', JSON.stringify(data.data[0]));
-        this.router.navigate(['schedule']);
+        this.cookieService.set('user', JSON.stringify(data.data[0]), {
+          expires: 3,
+        });
+        this.router.navigateByUrl(this.returnUrl);
       },
       (err) => {
         console.log('Error in credentials', err);
