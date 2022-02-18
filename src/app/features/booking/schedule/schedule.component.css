@@ -1,3 +1,19 @@
 .calendar-container {
   padding: 5px;
 }
+
+button {
+  background-color: #000 !important;
+  float: right;
+}
+.btn-black {
+  background-color: #000 !important;
+  color: #fff;
+}
+
+.right-side-button {
+  float: right;
+}
+.navbar-header {
+  width: 100%;
+}
