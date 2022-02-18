@@ -9,6 +9,7 @@ import { RoomEditComponent } from './features/room/room-edit/room-edit.component
 import { AdminPageComponent } from './features/admin-page/admin-page.component';
 import { AuthGuard } from './features/services/auth.guard';
 import { RoleGuard } from './features/services/role.guard';
+import { AuthService } from './features/services/auth.service';
 
 const routes: Routes = [
   { path: '', redirectTo: 'schedule', pathMatch: 'full' },
@@ -24,5 +25,6 @@ const routes: Routes = [
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
+  providers: [AuthService],
 })
 export class AppRoutingModule {}
