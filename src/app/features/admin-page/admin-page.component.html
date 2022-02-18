@@ -1,0 +1,42 @@
+<div class="sidenav">
+  <div class="login-main-text">
+    <h2>
+      Eazy-Booking<br />
+      Admin Page
+    </h2>
+    <p>Admin Dashboard</p>
+  </div>
+</div>
+<div class="main">
+  <div class="col-md-6 col-sm-12">
+    <div class="login-form">
+      <h3>Room Details</h3>
+      <ol class="list-group list-group-numbered">
+        <li *ngFor="let room of rooms" class="list-group-item">
+          <b>{{ room.roomName }}</b>
+          <span class="pull-right">
+            <button
+              type="button"
+              class="btn btn-danger"
+              (click)="deleteRoom(room)"
+            >
+              Delete
+            </button>
+            <button
+              type="button"
+              class="btn btn-black"
+              (click)="editRoom(room)"
+            >
+              Edit
+            </button>
+          </span>
+        </li>
+      </ol>
+      <span class="pull-right">
+        <button type="submit" class="btn btn-black" routerLink="/room-add">
+          Add Room
+        </button></span
+      >
+    </div>
+  </div>
+</div>
