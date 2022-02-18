@@ -1,17 +1,29 @@
+<div class="sidenav">
+  <div class="login-main-text">
+    <h2>
+      Eazy-Booking<br />
+      Room Add Page
+    </h2>
+    <p>Add the rooms here.</p>
+  </div>
+</div>
 <div class="container">
   <div class="main">
     <div class="col-md-6 col-sm-12">
       <div class="login-form">
-        <form>
+        <form [formGroup]="roomForm">
           <div class="form-group">
             <label>Room Name</label>
-            <input type="text" class="form-control" placeholder="Room Name" />
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Room Name"
+              formControlName="roomName"
+            />
           </div>
-          <div class="form-group">
-            <label>Room Id</label>
-            <input type="text" class="form-control" placeholder="Room Id" />
-          </div>
-          <button type="submit" class="btn btn-black">Book Room</button>
+          <button type="submit" class="btn btn-black" (click)="addRoom()">
+            Create Room
+          </button>
           <button type="submit" class="btn btn-secondary">Cancel</button>
           <br />
         </form>
