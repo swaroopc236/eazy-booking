@@ -10,6 +10,8 @@ export class AuthService implements CanActivate {
   private USERS_URL = 'https://eazy-booking-staging.herokuapp.com/users';
   // private USERS_URL = 'http://localhost:5000/users';
 
+  currentUser: any;
+
   constructor(
     private http: HttpClient,
     private cookieService: CookieService,

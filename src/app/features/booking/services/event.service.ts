@@ -4,18 +4,20 @@ import { webSocket, WebSocketSubject } from 'rxjs/webSocket';
 import { catchError, tap, switchAll } from 'rxjs/operators';
 import { EMPTY } from 'rxjs';
 import { Observable, Subject } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
 })
 export class EventService {
+  currentRoom: any;
   WS_ENDPOINT_REMOTE = 'https://eazy-booking-staging.herokuapp.com';
 
   WS_ENDPOINT_LOCAL = 'http://localhost:5000';
+  EVENTS_URL: string = 'https://eazy-booking-staging.herokuapp.com/events';
 
-  ws: any;
   socket: any;
-  constructor() {
+  constructor(private http: HttpClient) {
     // this.ws = new WebSocket(this.WS_ENDPOINT_LOCAL);
     // this.ws = new WebSocket(this.WS_ENDPOINT_REMOTE);
     // console.log(this.ws);
@@ -42,6 +44,26 @@ export class EventService {
     this.socket.on('BROADCAST', (data: any) => {
       console.log(data);
     });
+  }
+
+  getEvents() {
+    return this.http.get(`${this.EVENTS_URL}`);
+  }
+
+  addEvent(event: any) {
+    return this.http.post(`${this.EVENTS_URL}`, event, {
+      withCredentials: true,
+    });
+  }
+
+  updateEvent(event: any) {
+    return this.http.put(`${this.EVENTS_URL}`, event, {
+      withCredentials: true,
+    });
+  }
+
+  deleteEvent() {
+    return this.http.delete(`${this.EVENTS_URL}`);
   }
 
   onLatestEvents() {

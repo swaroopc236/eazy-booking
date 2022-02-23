@@ -48,10 +48,12 @@ export class LoginComponent implements OnInit {
     this.userDetails.password = this.loginForm.value['password'];
     this.authService.loginUser(this.userDetails).subscribe(
       (data: any) => {
-        console.log(data);
+        // console.log(data);
         this.cookieService.set('user', JSON.stringify(data.data[0]), {
           expires: 3,
         });
+        this.authService.currentUser = data.data[0];
+        console.log(this.authService.currentUser);
         this.router.navigateByUrl(this.returnUrl);
       },
       (err) => {
