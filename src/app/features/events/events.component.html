@@ -7,21 +7,39 @@
  <div class="main">
     <div class="col-md-6 col-sm-12">
        <div class="login-form">
-          <form>
+         <form  [formGroup]="eventForm" (ngSubmit)=submit(eventForm) >
              <div class="form-group">
                 <label>Event Title</label>
-                <input type="text" class="form-control" placeholder="Event Title.....">
+                <input 
+                type="text" 
+                class="form-control" 
+                placeholder="Event Title....." 
+                formControlName="eventTitle" 
+                required
+                >
              </div>
              <div class="form-group">
                 <label for="appt">Choose Start time for your Meeting:</label>
-                <input type="time" id="appt" class="form-control" min="09:00" max="18:00"required>
+                <input 
+                type="time" 
+                id="appt" 
+                class="form-control" 
+                min="09:00" max="18:00" 
+                formControlName="eventStart" 
+                required> 
              </div>
              <div class="form-group">
                 <label for="appt">Choose End time for your Meeting:</label>
-                <input type="time" id="appt" class="form-control" min="09:00" max="18:00"required>
+                <input 
+                type="time"
+                id="appt" 
+                class="form-control" 
+                min="09:00" max="18:00"
+                formControlName="eventEnd" 
+                required>
                 <small>Office hours are 9am to 6pm</small>
              </div>
-             <button type="submit" class="btn btn-black">Submit</button>
+             <button type="submit" class="btn btn-black" [disabled]="!eventForm.valid">Submit</button>
              <button type="submit" class="btn btn-secondary">Cancel</button>
              <br>
              <hr>
