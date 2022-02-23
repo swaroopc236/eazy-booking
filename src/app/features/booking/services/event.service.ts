@@ -15,6 +15,7 @@ export class EventService {
 
   WS_ENDPOINT_LOCAL = 'http://localhost:5000';
   EVENTS_URL: string = 'https://eazy-booking-staging.herokuapp.com/events';
+  TODAY_STR = new Date().toISOString();
 
   socket: any;
   constructor(private http: HttpClient) {
@@ -51,9 +52,18 @@ export class EventService {
   }
 
   addEvent(event: any) {
+    event.eventDetails.start = this.TODAY_STR.replace(
+      /T.*$/,
+      `T${event.eventDetails.start}`
+    );
+    event.eventDetails.end = this.TODAY_STR.replace(
+      /T.*$/,
+      `T${event.eventDetails.end}`
+    );
     return this.http.post(`${this.EVENTS_URL}`, event, {
       withCredentials: true,
     });
+    // console.log(event);
   }
 
   updateEvent(event: any) {

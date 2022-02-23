@@ -54,23 +54,26 @@ export class EventsComponent implements OnInit {
 
   onSubmit() {
     this.event.eventDetails.title = this.eventForm.value['eventTitle'];
-    this.event.eventDetails.start = this.eventForm.value['eventStart'];
-    this.event.eventDetails.end = this.eventForm.value['eventEnd'];
+    this.event.eventDetails.start = this.eventForm.value['eventStart'] + ':00';
+    this.event.eventDetails.end = this.eventForm.value['eventEnd'] + ':00';
     this.event.userId = JSON.parse(this.cookieService.get('user')).userId;
     this.event.roomId = this.roomId;
 
     console.log(this.event);
-    this.router.navigate(['/schedule'], {
-      queryParams: { selectedRoomId: this.roomId },
-    });
+    // this.eventService.addEvent(this.event);
+    // this.router.navigate(['/schedule'], {
+    //   queryParams: { selectedRoomId: this.roomId },
+    // });
 
-    // this.eventService.addEvent(this.event).subscribe(
-    //   (data: any) => {
-    //     this.router.navigateByUrl('/schedule');
-    //   },
-    //   (err) => {
-    //     console.log('Error in adding event', err);
-    //   }
-    // );
+    this.eventService.addEvent(this.event).subscribe(
+      (data: any) => {
+        this.router.navigate(['/schedule'], {
+          queryParams: { selectedRoomId: this.roomId },
+        });
+      },
+      (err) => {
+        console.log('Error in adding event', err);
+      }
+    );
   }
 }

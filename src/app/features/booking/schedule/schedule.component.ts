@@ -21,7 +21,7 @@ export class ScheduleComponent implements OnInit, AfterViewInit {
   events: any;
   roomEvents: any;
   selectRoomForm: FormGroup;
-
+  roomEventsDetail: any = [];
   timeSelect = (selectInfo: any) => {
     console.log(selectInfo.startStr);
     console.log(selectInfo.endStr);
@@ -69,8 +69,17 @@ export class ScheduleComponent implements OnInit, AfterViewInit {
     return this.selectRoomForm.get('roomNames');
   }
 
+  getEventDetailsFromEvent() {
+    this.roomEventsDetail = [];
+    this.roomEvents.filter((e: any) => {
+      if (e.eventDetails) {
+        this.roomEventsDetail.push(e.eventDetails);
+      }
+    });
+    this.calendarOptions.events = this.roomEventsDetail;
+  }
+
   ngOnInit(): void {
-    this.calendarOptions.events = this.bookingService.getEvents();
     this.roomService.getRooms().subscribe(
       (data: any) => {
         // console.log(data.data);
@@ -84,11 +93,14 @@ export class ScheduleComponent implements OnInit, AfterViewInit {
 
         this.eventService.getEvents().subscribe(
           (data: any) => {
-            // console.log(data.data);
+            console.log(data.data);
             this.events = data.data;
             this.roomEvents = this.events.filter(
               (event: any) => event.roomId == this.selectedRoomId
             );
+            this.getEventDetailsFromEvent();
+            console.log(this.roomEventsDetail);
+            // this.calendarOptions.events = this.roomEventsDetail;
             // console.log(this.roomEvents);
           },
           (err) => {
@@ -141,7 +153,10 @@ export class ScheduleComponent implements OnInit, AfterViewInit {
     this.roomEvents = this.events.filter(
       (event: any) => event.roomId == this.selectedRoomId
     );
-    // console.log(this.roomEvents);
+    this.getEventDetailsFromEvent();
+    // this.calendarOptions.events = this.roomEventsDetail;
+    // console.log(this.calendarOptions.events);
+    console.log(this.roomEvents);
   }
 
   logoutUser() {
