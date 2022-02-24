@@ -18,6 +18,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 // import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AdminPageComponent } from './features/admin-page/admin-page.component';
+import { MyEventsComponent } from './features/my-events/my-events.component';
+import { EventEditComponent } from './features/event-edit/event-edit.component';
 
 // register FullCalendar plugins
 FullCalendarModule.registerPlugins([
@@ -37,6 +39,8 @@ FullCalendarModule.registerPlugins([
     RoomAddComponent,
     RoomEditComponent,
     AdminPageComponent,
+    MyEventsComponent,
+    EventEditComponent,
   ],
   imports: [
     BrowserModule,

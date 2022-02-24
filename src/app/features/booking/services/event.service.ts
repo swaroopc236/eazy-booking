@@ -66,14 +66,16 @@ export class EventService {
     // console.log(event);
   }
 
-  updateEvent(event: any) {
-    return this.http.put(`${this.EVENTS_URL}`, event, {
+  editEvent(event: any) {
+    return this.http.put(`${this.EVENTS_URL}/${event.eventId}`, event, {
       withCredentials: true,
     });
   }
 
-  deleteEvent() {
-    return this.http.delete(`${this.EVENTS_URL}`);
+  deleteEvent(eventId: string) {
+    return this.http.delete(`${this.EVENTS_URL}/${eventId}`, {
+      withCredentials: true,
+    });
   }
 
   onLatestEvents() {

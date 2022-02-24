@@ -10,6 +10,8 @@ import { AdminPageComponent } from './features/admin-page/admin-page.component';
 import { AuthGuard } from './features/services/auth.guard';
 import { RoleGuard } from './features/services/role.guard';
 import { AuthService } from './features/services/auth.service';
+import { MyEventsComponent } from './features/my-events/my-events.component';
+import { EventEditComponent } from './features/event-edit/event-edit.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'schedule', pathMatch: 'full' },
@@ -20,6 +22,12 @@ const routes: Routes = [
   { path: 'room-add', component: RoomAddComponent },
   { path: 'room-edit', component: RoomEditComponent },
   { path: 'admin', component: AdminPageComponent, canActivate: [RoleGuard] },
+  { path: 'myEvents', component: MyEventsComponent, canActivate: [AuthGuard] },
+  {
+    path: 'eventEdit',
+    component: EventEditComponent,
+    canActivate: [AuthGuard],
+  },
 ];
 
 @NgModule({

@@ -1,0 +1,41 @@
+<div class="sidenav">
+  <div class="login-main-text">
+    <h2>
+      Eazy-Booking<br />
+      My Events Page
+    </h2>
+  </div>
+</div>
+<div class="main">
+  <div class="col-md-6 col-sm-12">
+    <div class="login-form">
+      <h3>My Events</h3>
+      <ol class="list-group list-group-numbered">
+        <li *ngFor="let event of myEvents" class="list-group-item">
+          <b>{{ event.eventDetails.title }}</b>
+          <span class="pull-right">
+            <button
+              type="button"
+              (click)="deleteEvent(event)"
+              class="btn btn-danger"
+            >
+              Delete
+            </button>
+            <button
+              type="button"
+              (click)="editEvent(event)"
+              class="btn btn-black"
+            >
+              Edit
+            </button>
+          </span>
+        </li>
+      </ol>
+      <span class="pull-right">
+        <button type="submit" class="btn btn-black" routerLink="/events">
+          Add Event
+        </button></span
+      >
+    </div>
+  </div>
+</div>
