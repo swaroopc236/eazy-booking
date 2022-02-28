@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { EventService } from '../booking/services/event.service';
 import { AuthService } from '../services/auth.service';
 
@@ -13,6 +14,7 @@ import { AuthService } from '../services/auth.service';
 export class EventsComponent implements OnInit {
   eventForm: FormGroup;
   roomId: any;
+  selectedDate: any;
   event: any = {
     userId: '',
     roomId: '',
@@ -28,6 +30,7 @@ export class EventsComponent implements OnInit {
     private eventService: EventService,
     private authService: AuthService,
     private cookieService: CookieService,
+    private spinnerService: NgxSpinnerService,
     private router: Router,
     private route: ActivatedRoute
   ) {
@@ -50,9 +53,12 @@ export class EventsComponent implements OnInit {
 
   ngOnInit(): void {
     this.roomId = this.route.snapshot.queryParams['roomId'];
+    this.selectedDate = this.route.snapshot.queryParams['selectedDate'];
+    console.log(this.selectedDate);
   }
 
   onSubmit() {
+    // console.log(this.eventForm.value['eventStart']);
     this.event.eventDetails.title = this.eventForm.value['eventTitle'];
     this.event.eventDetails.start = this.eventForm.value['eventStart'] + ':00';
     this.event.eventDetails.end = this.eventForm.value['eventEnd'] + ':00';
@@ -64,15 +70,20 @@ export class EventsComponent implements OnInit {
     // this.router.navigate(['/schedule'], {
     //   queryParams: { selectedRoomId: this.roomId },
     // });
-
-    this.eventService.addEvent(this.event).subscribe(
+    this.spinnerService.show();
+    this.eventService.addEvent(this.event, this.selectedDate).subscribe(
       (data: any) => {
+        this.spinnerService.hide();
         this.router.navigate(['/schedule'], {
-          queryParams: { selectedRoomId: this.roomId },
+          queryParams: {
+            selectedRoomId: this.roomId,
+            selectedDate: this.selectedDate,
+          },
         });
       },
       (err) => {
         console.log('Error in adding event', err);
+        this.spinnerService.hide();
       }
     );
   }

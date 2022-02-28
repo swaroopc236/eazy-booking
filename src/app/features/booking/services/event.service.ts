@@ -51,7 +51,24 @@ export class EventService {
     return this.http.get(`${this.EVENTS_URL}`);
   }
 
-  addEvent(event: any) {
+  addEvent(event: any, date: string) {
+    event.eventDetails.start = `${date}T${event.eventDetails.start}`;
+    event.eventDetails.end = `${date}T${event.eventDetails.end}`;
+    // event.eventDetails.start = this.TODAY_STR.replace(
+    //   /T.*$/,
+    //   `T${event.eventDetails.start}`
+    // );
+    // event.eventDetails.end = this.TODAY_STR.replace(
+    //   /T.*$/,
+    //   `T${event.eventDetails.end}`
+    // );
+    return this.http.post(`${this.EVENTS_URL}`, event, {
+      withCredentials: true,
+    });
+    // console.log(event);
+  }
+
+  editEvent(event: any) {
     event.eventDetails.start = this.TODAY_STR.replace(
       /T.*$/,
       `T${event.eventDetails.start}`
@@ -60,13 +77,6 @@ export class EventService {
       /T.*$/,
       `T${event.eventDetails.end}`
     );
-    return this.http.post(`${this.EVENTS_URL}`, event, {
-      withCredentials: true,
-    });
-    // console.log(event);
-  }
-
-  editEvent(event: any) {
     return this.http.put(`${this.EVENTS_URL}/${event.eventId}`, event, {
       withCredentials: true,
     });

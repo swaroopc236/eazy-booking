@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { RoomService } from '../room/services/room.service';
 
 @Component({
@@ -9,7 +10,11 @@ import { RoomService } from '../room/services/room.service';
 })
 export class AdminPageComponent implements OnInit {
   rooms: any = null;
-  constructor(private roomService: RoomService, private router: Router) {
+  constructor(
+    private roomService: RoomService,
+    private spinnerService: NgxSpinnerService,
+    private router: Router
+  ) {
     // this.getRooms();
   }
 
@@ -18,10 +23,12 @@ export class AdminPageComponent implements OnInit {
   }
 
   getRooms() {
+    this.spinnerService.show();
     this.roomService.getRooms().subscribe(
       (data: any) => {
         console.log(data);
         this.rooms = data.data;
+        this.spinnerService.hide();
       },
       (err) => {
         console.log('Error in getting rooms', err);

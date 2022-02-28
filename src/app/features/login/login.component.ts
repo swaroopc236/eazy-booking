@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { AuthService } from '../services/auth.service';
 
 @Component({
@@ -22,6 +23,7 @@ export class LoginComponent implements OnInit {
     private fb: FormBuilder,
     private authService: AuthService,
     private cookieService: CookieService,
+    private spinnerService: NgxSpinnerService,
     private router: Router,
     private route: ActivatedRoute
   ) {
@@ -46,6 +48,7 @@ export class LoginComponent implements OnInit {
   loginUser() {
     this.userDetails.emailId = this.loginForm.value['emailId'];
     this.userDetails.password = this.loginForm.value['password'];
+    this.spinnerService.show();
     this.authService.loginUser(this.userDetails).subscribe(
       (data: any) => {
         // console.log(data);
@@ -54,10 +57,12 @@ export class LoginComponent implements OnInit {
         });
         this.authService.currentUser = data.data[0];
         console.log(this.authService.currentUser);
-        this.router.navigateByUrl(this.returnUrl);
+        this.spinnerService.hide();
+        this.router.navigateByUrl(this.returnUrl, { replaceUrl: true });
       },
       (err) => {
         console.log('Error in credentials', err);
+        this.spinnerService.hide();
       }
     );
   }

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { RoomService } from '../services/room.service';
 
 @Component({
@@ -17,6 +18,7 @@ export class RoomAddComponent implements OnInit {
   constructor(
     private roomService: RoomService,
     private fb: FormBuilder,
+    private spinnerService: NgxSpinnerService,
     private router: Router
   ) {
     this.roomForm = this.fb.group({
@@ -28,13 +30,16 @@ export class RoomAddComponent implements OnInit {
 
   addRoom() {
     this.roomDetails.roomName = this.roomForm.value['roomName'];
+    this.spinnerService.show();
     this.roomService.addRoom(this.roomDetails).subscribe(
       (data: any) => {
         console.log(data);
+        this.spinnerService.hide();
         this.router.navigateByUrl('/admin');
       },
       (err) => {
         console.log('Error in adding room', err);
+        this.spinnerService.hide();
       }
     );
   }

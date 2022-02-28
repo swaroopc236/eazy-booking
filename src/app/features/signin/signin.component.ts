@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { AuthService } from '../services/auth.service';
 
 @Component({
@@ -21,6 +22,7 @@ export class SigninComponent implements OnInit {
     private fb: FormBuilder,
     private authService: AuthService,
     private cookieService: CookieService,
+    private spinnerService: NgxSpinnerService,
     private router: Router
   ) {
     this.signupForm = this.fb.group({
@@ -59,16 +61,19 @@ export class SigninComponent implements OnInit {
     if (this.comparePasswords(this.userDetails.password, confirmPassword)) {
       this.userDetails.userName = this.signupForm.value['userName'];
       this.userDetails.emailId = this.signupForm.value['emailId'];
+      this.spinnerService.show();
       this.authService.signupUser(this.userDetails).subscribe(
         (data: any) => {
           // console.log(data);
           this.cookieService.set('user', JSON.stringify(data.data[0]), {
             expires: 3,
           });
+          this.spinnerService.hide();
           this.router.navigate(['login']);
         },
         (err: any) => {
           console.log('Error while registering', err);
+          this.spinnerService.hide();
         }
       );
     } else {

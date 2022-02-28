@@ -1,4 +1,4 @@
-.main-box {
+/* .main-box {
   display: flex;
   flex-flow: column;
   height: 100%;
@@ -7,17 +7,26 @@
 
 .main-header {
   flex: 0 1 auto;
+} */
+
+.parent-spinner {
+  position: relative;
 }
 
 .calendar-container {
-  flex: 1 1 auto;
+  /* flex: 1 1 auto; */
   padding: 5px;
-  height: 100%;
+  /* height: 100%; */
 }
 
-.calendar {
-  overflow-y: scroll;
+.view-green {
+  background-color: green;
 }
+
+/* .calendar { */
+/* background-color: grey; */
+/* overflow-y: scroll; */
+/* } */
 
 button {
   background-color: #000 !important;

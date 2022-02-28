@@ -1,44 +1,62 @@
-<div class="main-box">
-  <div class="main-header">
-    <nav class="navbar navbar-expand-lg bg-dark">
-      <a class="navbar-brand text-white bg-dark"><h1>Eazy Booking</h1></a>
-      <div class="navbar-header">
-        <button class="btn btn-black" type="submit" (click)="navigateToAdmin()">
-          Admin
-        </button>
+<div class="parent-spinner">
+  <ngx-spinner
+    bdColor="rgba(0, 0, 0, 0.8)"
+    size="medium"
+    color="#fff"
+    type="ball-pulse"
+    [fullScreen]="true"
+    ><p style="color: white">Loading...</p></ngx-spinner
+  >
+  <div class="main-box">
+    <div class="main-header">
+      <nav class="navbar navbar-expand-lg bg-dark">
+        <a class="navbar-brand text-white bg-dark"><h1>Eazy Booking</h1></a>
+        <div class="navbar-header">
+          <button
+            class="btn btn-black"
+            type="submit"
+            (click)="navigateToAdmin()"
+          >
+            Admin
+          </button>
 
-        <button
-          class="btn btn-black"
-          type="submit"
-          (click)="navigateToMyEvents()"
-        >
-          My Events
-        </button>
+          <button
+            class="btn btn-black"
+            type="submit"
+            (click)="navigateToMyEvents()"
+          >
+            My Events
+          </button>
 
-        <button
-          class="btn btn-black"
-          type="submit"
-          (click)="navigateToEvents()"
-        >
-          Add Events
-        </button>
-        <button class="btn btn-danger" (click)="logoutUser()">Logout</button>
-      </div>
-    </nav>
-  </div>
-
-  <div class="calendar-container">
-    <div>
-      <form [formGroup]="selectRoomForm">
-        <select name="rooms" id="rooms" (change)="onChange($event)">
-          <option *ngFor="let room of rooms" value="{{ room.roomId }}">
-            {{ room.roomName }}
-          </option>
-        </select>
-      </form>
+          <button
+            class="btn btn-black"
+            type="submit"
+            (click)="navigateToEvents()"
+          >
+            Add Events
+          </button>
+          <button class="btn btn-danger" (click)="logoutUser()">Logout</button>
+        </div>
+      </nav>
     </div>
-    <div class="calendar">
-      <full-calendar [options]="calendarOptions"></full-calendar>
+
+    <div class="calendar-container">
+      <div>
+        <form [formGroup]="selectRoomForm">
+          <select name="rooms" id="rooms" (change)="onChange($event)">
+            <option *ngFor="let room of rooms" value="{{ room.roomId }}">
+              {{ room.roomName }}
+            </option>
+          </select>
+        </form>
+      </div>
+      <div class="calendar">
+        <full-calendar
+          id="calendar"
+          #calendar
+          [options]="calendarOptions"
+        ></full-calendar>
+      </div>
     </div>
   </div>
 </div>
