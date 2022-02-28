@@ -20,6 +20,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AdminPageComponent } from './features/admin-page/admin-page.component';
 import { MyEventsComponent } from './features/my-events/my-events.component';
 import { EventEditComponent } from './features/event-edit/event-edit.component';
+import { UserEditComponent } from './features/user-edit/user-edit.component';
 
 // register FullCalendar plugins
 FullCalendarModule.registerPlugins([
@@ -41,6 +42,7 @@ FullCalendarModule.registerPlugins([
     AdminPageComponent,
     MyEventsComponent,
     EventEditComponent,
+    UserEditComponent,
   ],
   imports: [
     BrowserModule,

@@ -189,4 +189,27 @@ export class ScheduleComponent implements OnInit, AfterViewInit {
   navigateToAdmin() {
     this.router.navigateByUrl('/admin');
   }
+
+  navigateToLogin() {
+    this.router.navigateByUrl('/login');
+  }
+
+  navigateToUserEdit() {
+    const user = JSON.parse(this.cookieService.get('user'));
+    console.log(user);
+    this.router.navigateByUrl('/userEdit', {
+      state: { userData: user },
+    });
+  }
+
+  isUserLoggedIn(): boolean {
+    const user_cookie = this.cookieService.get('user');
+    if (user_cookie) {
+      const user = JSON.parse(this.cookieService.get('user'));
+      if (user) {
+        return true;
+      }
+    }
+    return false;
+  }
 }

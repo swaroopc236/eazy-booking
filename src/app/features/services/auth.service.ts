@@ -35,6 +35,13 @@ export class AuthService implements CanActivate {
     });
   }
 
+  updateUser(userId: string, userDetails: any) {
+    console.log(userId, userDetails);
+    return this.http.put(`${this.USERS_URL}/${userId}`, userDetails, {
+      withCredentials: true,
+    });
+  }
+
   isAuthenticated(): boolean {
     const user_cookie = this.cookieService.get('user');
     if (user_cookie) {

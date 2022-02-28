@@ -3,17 +3,51 @@
     <nav class="navbar navbar-expand-lg bg-dark">
       <a class="navbar-brand text-white bg-dark"><h1>Eazy Booking</h1></a>
       <div class="navbar-header">
-        <button class="btn btn-black" type="submit" (click)="navigateToAdmin()">
-          Admin
-        </button>
+        <div class="btn-group">
+          <button
+            type="button"
+            class="btn btn-black dropdown-toggle"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+          >
+            Account
+          </button>
+          <div class="dropdown-menu">
+            <a
+              class="dropdown-item"
+              type="submit"
+              (click)="navigateToLogin()"
+              *ngIf="!isUserLoggedIn()"
+              >Login</a
+            >
+            <a
+              class="dropdown-item"
+              type="submit"
+              (click)="navigateToUserEdit()"
+              *ngIf="isUserLoggedIn()"
+              >Edit My Account</a
+            >
+            <a
+              class="dropdown-item"
+              type="submit"
+              (click)="navigateToMyEvents()"
+              *ngIf="isUserLoggedIn()"
+              >My Events</a
+            >
 
-        <button
-          class="btn btn-black"
-          type="submit"
-          (click)="navigateToMyEvents()"
-        >
-          My Events
-        </button>
+            <a class="dropdown-item" type="submit" (click)="navigateToAdmin()"
+              >Admin</a
+            >
+            <div class="dropdown-divider"></div>
+            <a
+              class="dropdown-item btn btn-danger"
+              (click)="logoutUser()"
+              *ngIf="isUserLoggedIn()"
+              >Logout</a
+            >
+          </div>
+        </div>
 
         <button
           class="btn btn-black"
@@ -22,7 +56,6 @@
         >
           Add Events
         </button>
-        <button class="btn btn-danger" (click)="logoutUser()">Logout</button>
       </div>
     </nav>
   </div>

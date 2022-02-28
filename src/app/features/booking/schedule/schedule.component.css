@@ -19,9 +19,15 @@
   overflow-y: scroll;
 }
 
+.btn-group {
+  background-color: #000 !important;
+  float: right;
+}
+
 button {
   background-color: #000 !important;
   float: right;
+  margin-right: 5px;
 }
 .btn-black {
   background-color: #000 !important;
