@@ -17,8 +17,8 @@ export class EventsComponent implements OnInit {
   selectedDate: any;
   selectedTime = {
     startTime: '',
-    endTime: ''
-  }
+    endTime: '',
+  };
   event: any = {
     userId: '',
     roomId: '',
@@ -88,6 +88,7 @@ export class EventsComponent implements OnInit {
             selectedRoomId: this.roomId,
             selectedDate: this.selectedDate,
           },
+          replaceUrl: true,
         });
       },
       (err) => {
@@ -95,5 +96,15 @@ export class EventsComponent implements OnInit {
         this.spinnerService.hide();
       }
     );
+  }
+
+  onCancel() {
+    this.router.navigate(['/schedule'], {
+      queryParams: {
+        selectedRoomId: this.roomId,
+        selectedDate: this.selectedDate,
+      },
+      replaceUrl: true,
+    });
   }
 }

@@ -18,44 +18,48 @@
               class="dropdown-item"
               type="submit"
               (click)="navigateToLogin()"
-              *ngIf="!isUserLoggedIn()"
+              *ngIf="!isUserLoggedIn"
               >Login</a
             >
             <a
               class="dropdown-item"
               type="submit"
               (click)="navigateToUserEdit()"
-              *ngIf="isUserLoggedIn()"
+              *ngIf="isUserLoggedIn"
               >My Account</a
             >
             <a
               class="dropdown-item"
               type="submit"
               (click)="navigateToMyEvents()"
-              *ngIf="isUserLoggedIn()"
+              *ngIf="isUserLoggedIn"
               >My Events</a
             >
 
-            <a class="dropdown-item" type="submit" (click)="navigateToAdmin()"
+            <a
+              class="dropdown-item"
+              type="submit"
+              (click)="navigateToAdmin()"
+              *ngIf="isAdmin"
               >Admin</a
             >
             <div class="dropdown-divider"></div>
             <a
               class="dropdown-item btn btn-danger"
               (click)="logoutUser()"
-              *ngIf="isUserLoggedIn()"
+              *ngIf="isUserLoggedIn"
               >Logout</a
             >
           </div>
         </div>
 
-        <button
+        <!-- <button
           class="btn btn-black"
           type="submit"
           (click)="navigateToEvents()"
         >
           Add Events
-        </button>
+        </button> -->
       </div>
     </nav>
   </div>

@@ -37,27 +37,32 @@ export class ScheduleComponent implements OnInit, AfterViewInit {
   currentSelectedDate: any;
   currentSelectedTime = {
     startTime: '',
-    endTime: ''
-  }
+    endTime: '',
+  };
   currentView: any = undefined;
 
-  timeSelect = (selectInfo: any) => {
+  isUserLoggedIn: boolean;
+  isAdmin: boolean;
 
+  timeSelect = (selectInfo: any) => {
     // console.log(new Date().getTime());
     const startDate = selectInfo.startStr.substring(8, 10);
     const endDate = selectInfo.endStr.substring(8, 10);
-    if(startDate !== endDate) {
+    if (startDate !== endDate) {
       this.calendarApi.unselect();
       return;
     }
     console.log('successful selection');
-    this.currentSelectedTime.startTime = selectInfo.startStr.split('T')[1].substring(0, 5)
-    this.currentSelectedTime.endTime = selectInfo.endStr.split('T')[1].substring(0, 5)
+    this.currentSelectedTime.startTime = selectInfo.startStr
+      .split('T')[1]
+      .substring(0, 5);
+    this.currentSelectedTime.endTime = selectInfo.endStr
+      .split('T')[1]
+      .substring(0, 5);
     this.navigateToEvents();
     // selectInfo.jsEvent.target.style.backgroundColor = 'green';
     // selectInfo.jsEvent.target.style.color = 'red';
     // console.log(selectInfo.jsEvent.target.style.backgroundColor);
-
   };
 
   eventSelect = (eventInfo: any) => {
@@ -70,7 +75,6 @@ export class ScheduleComponent implements OnInit, AfterViewInit {
   };
 
   canSelect() {
-    
     return true;
   }
 
@@ -134,6 +138,9 @@ export class ScheduleComponent implements OnInit, AfterViewInit {
     this.selectRoomForm = this.fb.group({
       roomNames: ['', [Validators.required]],
     });
+
+    this.isUserLoggedIn = this.authService.isAuthenticated();
+    this.isAdmin = this.authService.isAdmin();
 
     this.events$ = this.eventService.onLatestEvents();
     this.printEvents();
@@ -211,7 +218,7 @@ export class ScheduleComponent implements OnInit, AfterViewInit {
     var calendarEl = document.getElementById('calendar')!;
     this.calendar = new Calendar(calendarEl, this.calendarOptions);
     // console.log(this.calendar);
-    
+
     this.calendarApi = this.calendarComponent.getApi();
     console.log(this.calendarApi);
     // console.log(document.getElementById('rooms')!.options);
@@ -301,14 +308,14 @@ export class ScheduleComponent implements OnInit, AfterViewInit {
     });
   }
 
-  isUserLoggedIn(): boolean {
-    const user_cookie = this.cookieService.get('user');
-    if (user_cookie) {
-      const user = JSON.parse(this.cookieService.get('user'));
-      if (user) {
-        return true;
-      }
-    }
-    return false;
-  }
+  // isUserLoggedIn(): boolean {
+  //   const user_cookie = this.cookieService.get('user');
+  //   if (user_cookie) {
+  //     const user = JSON.parse(this.cookieService.get('user'));
+  //     if (user) {
+  //       return true;
+  //     }
+  //   }
+  //   return false;
+  // }
 }

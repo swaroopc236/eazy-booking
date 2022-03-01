@@ -15,7 +15,6 @@ import { EventsComponent } from './features/events/events.component';
 import { RoomAddComponent } from './features/room/room-add/room-add.component';
 import { RoomEditComponent } from './features/room/room-edit/room-edit.component';
 import { ReactiveFormsModule } from '@angular/forms';
-// import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AdminPageComponent } from './features/admin-page/admin-page.component';
 import { MyEventsComponent } from './features/my-events/my-events.component';
@@ -55,6 +54,7 @@ FullCalendarModule.registerPlugins([
     HttpClientModule,
     BrowserAnimationsModule,
     NgxSpinnerModule,
+    NgbModule,
   ],
   providers: [],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
