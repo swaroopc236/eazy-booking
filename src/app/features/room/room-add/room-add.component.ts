@@ -35,7 +35,7 @@ export class RoomAddComponent implements OnInit {
       (data: any) => {
         console.log(data);
         this.spinnerService.hide();
-        this.router.navigateByUrl('/admin');
+        this.router.navigateByUrl('/admin', {replaceUrl: true});
       },
       (err) => {
         console.log('Error in adding room', err);

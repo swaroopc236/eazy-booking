@@ -1,4 +1,83 @@
-<div class="parent-spinner">
+<div class="main-box">
+  <div class="main-header">
+    <nav class="navbar navbar-expand-lg bg-dark">
+      <a class="navbar-brand text-white bg-dark"><h1>Eazy Booking</h1></a>
+      <div class="navbar-header">
+        <div class="btn-group">
+          <button
+            type="button"
+            class="btn btn-black dropdown-toggle"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+          >
+            Account
+          </button>
+          <div class="dropdown-menu">
+            <a
+              class="dropdown-item"
+              type="submit"
+              (click)="navigateToLogin()"
+              *ngIf="!isUserLoggedIn()"
+              >Login</a
+            >
+            <a
+              class="dropdown-item"
+              type="submit"
+              (click)="navigateToUserEdit()"
+              *ngIf="isUserLoggedIn()"
+              >Edit My Account</a
+            >
+            <a
+              class="dropdown-item"
+              type="submit"
+              (click)="navigateToMyEvents()"
+              *ngIf="isUserLoggedIn()"
+              >My Events</a
+            >
+
+            <a class="dropdown-item" type="submit" (click)="navigateToAdmin()"
+              >Admin</a
+            >
+            <div class="dropdown-divider"></div>
+            <a
+              class="dropdown-item btn btn-danger"
+              (click)="logoutUser()"
+              *ngIf="isUserLoggedIn()"
+              >Logout</a
+            >
+          </div>
+        </div>
+
+        <button
+          class="btn btn-black"
+          type="submit"
+          (click)="navigateToEvents()"
+        >
+          Add Events
+        </button>
+      </div>
+    </nav>
+  </div>
+
+  <div class="calendar-container">
+    <div>
+      <form [formGroup]="selectRoomForm">
+        <select name="rooms" id="rooms" (change)="onChange($event)">
+          <option *ngFor="let room of rooms" value="{{ room.roomId }}">
+            {{ room.roomName }}
+          </option>
+        </select>
+      </form>
+    </div>
+    <div class="calendar">
+      <full-calendar
+        id="calendar"
+        #calendar
+        [options]="calendarOptions"
+      ></full-calendar>
+    </div>
+  </div>
   <ngx-spinner
     bdColor="rgba(0, 0, 0, 0.8)"
     size="medium"
@@ -7,56 +86,4 @@
     [fullScreen]="true"
     ><p style="color: white">Loading...</p></ngx-spinner
   >
-  <div class="main-box">
-    <div class="main-header">
-      <nav class="navbar navbar-expand-lg bg-dark">
-        <a class="navbar-brand text-white bg-dark"><h1>Eazy Booking</h1></a>
-        <div class="navbar-header">
-          <button
-            class="btn btn-black"
-            type="submit"
-            (click)="navigateToAdmin()"
-          >
-            Admin
-          </button>
-
-          <button
-            class="btn btn-black"
-            type="submit"
-            (click)="navigateToMyEvents()"
-          >
-            My Events
-          </button>
-
-          <button
-            class="btn btn-black"
-            type="submit"
-            (click)="navigateToEvents()"
-          >
-            Add Events
-          </button>
-          <button class="btn btn-danger" (click)="logoutUser()">Logout</button>
-        </div>
-      </nav>
-    </div>
-
-    <div class="calendar-container">
-      <div>
-        <form [formGroup]="selectRoomForm">
-          <select name="rooms" id="rooms" (change)="onChange($event)">
-            <option *ngFor="let room of rooms" value="{{ room.roomId }}">
-              {{ room.roomName }}
-            </option>
-          </select>
-        </form>
-      </div>
-      <div class="calendar">
-        <full-calendar
-          id="calendar"
-          #calendar
-          [options]="calendarOptions"
-        ></full-calendar>
-      </div>
-    </div>
-  </div>
 </div>

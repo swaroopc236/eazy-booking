@@ -15,6 +15,10 @@ export class EventsComponent implements OnInit {
   eventForm: FormGroup;
   roomId: any;
   selectedDate: any;
+  selectedTime = {
+    startTime: '',
+    endTime: ''
+  }
   event: any = {
     userId: '',
     roomId: '',
@@ -54,7 +58,12 @@ export class EventsComponent implements OnInit {
   ngOnInit(): void {
     this.roomId = this.route.snapshot.queryParams['roomId'];
     this.selectedDate = this.route.snapshot.queryParams['selectedDate'];
+    this.selectedTime.startTime = this.route.snapshot.queryParams['startTime'];
+    this.selectedTime.endTime = this.route.snapshot.queryParams['endTime'];
     console.log(this.selectedDate);
+    console.log(this.selectedTime);
+    this.eventForm.get('eventStart')?.setValue(this.selectedTime.startTime);
+    this.eventForm.get('eventEnd')?.setValue(this.selectedTime.endTime);
   }
 
   onSubmit() {

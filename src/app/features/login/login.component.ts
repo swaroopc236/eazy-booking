@@ -66,4 +66,8 @@ export class LoginComponent implements OnInit {
       }
     );
   }
+
+  navigateToSignin() {
+    this.router.navigateByUrl('/signin');
+  }
 }

@@ -13,6 +13,7 @@ import { AuthService } from './features/services/auth.service';
 import { MyEventsComponent } from './features/my-events/my-events.component';
 import { EventEditComponent } from './features/event-edit/event-edit.component';
 import { NoAuthGuard } from './features/services/no-auth.guard';
+import { UserEditComponent } from './features/user-edit/user-edit.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'schedule', pathMatch: 'full' },
@@ -28,6 +29,10 @@ const routes: Routes = [
     path: 'eventEdit',
     component: EventEditComponent,
     canActivate: [AuthGuard],
+  },
+  {
+    path: 'userEdit',
+    component: UserEditComponent,
   },
 ];
 

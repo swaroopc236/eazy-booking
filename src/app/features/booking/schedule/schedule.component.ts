@@ -1,9 +1,11 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import {
   CalendarOptions,
   Calendar,
   SlotLabelMountArg,
   SlotLaneMountArg,
+  ViewMountArg,
+  FullCalendarComponent,
 } from '@fullcalendar/angular';
 import { CookieService } from 'ngx-cookie-service';
 import { Observable } from 'rxjs';
@@ -31,14 +33,31 @@ export class ScheduleComponent implements OnInit, AfterViewInit {
   roomEventsDetail: any = [];
 
   calendar: any;
+  calendarApi: any;
   currentSelectedDate: any;
+  currentSelectedTime = {
+    startTime: '',
+    endTime: ''
+  }
+  currentView: any = undefined;
 
   timeSelect = (selectInfo: any) => {
-    // console.log(selectInfo.startStr);
-    // console.log(selectInfo.endStr);
+
+    // console.log(new Date().getTime());
+    const startDate = selectInfo.startStr.substring(8, 10);
+    const endDate = selectInfo.endStr.substring(8, 10);
+    if(startDate !== endDate) {
+      this.calendarApi.unselect();
+      return;
+    }
+    console.log('successful selection');
+    this.currentSelectedTime.startTime = selectInfo.startStr.split('T')[1].substring(0, 5)
+    this.currentSelectedTime.endTime = selectInfo.endStr.split('T')[1].substring(0, 5)
+    this.navigateToEvents();
     // selectInfo.jsEvent.target.style.backgroundColor = 'green';
     // selectInfo.jsEvent.target.style.color = 'red';
     // console.log(selectInfo.jsEvent.target.style.backgroundColor);
+
   };
 
   eventSelect = (eventInfo: any) => {
@@ -51,12 +70,17 @@ export class ScheduleComponent implements OnInit, AfterViewInit {
   };
 
   canSelect() {
-    // console.log(this.calendar);
+    
     return true;
   }
 
+  viewManipulation(view: ViewMountArg) {
+    // this.currentView = view;
+    // console.log(view);
+  }
+
   cellManipulation(cell: SlotLaneMountArg) {
-    const currentDateTime = Date.now();
+    const currentDateTime = Date.now() - 900000;
     const todayDateTime = new Date(new Date().toDateString()).getTime();
     const slotDateTime = cell.time!.milliseconds;
 
@@ -67,11 +91,10 @@ export class ScheduleComponent implements OnInit, AfterViewInit {
     }
     // console.log(new Date(new Date().toDateString()).getTime());
     // console.log(cell.time?.milliseconds);
-    // console.log(Date.now());
-    // cell
   }
 
   calendarOptions: CalendarOptions = {
+    allDaySlot: false,
     slotDuration: '00:15:00',
     scrollTime: '09:00:00',
     nowIndicator: true,
@@ -83,16 +106,19 @@ export class ScheduleComponent implements OnInit, AfterViewInit {
     initialView: 'timeGridDay',
     selectable: this.canSelect(),
     selectConstraint: {
-      start: Date.now(),
+      start: Date.now() - 900000,
     },
     selectOverlap: false,
     select: this.timeSelect,
     eventClick: this.eventSelect,
     datesSet: this.dateSelect,
     slotLaneDidMount: this.cellManipulation,
+    viewDidMount: this.viewManipulation,
   };
 
-  // events$: Observable<any[]>;
+  @ViewChild('calendar') calendarComponent!: FullCalendarComponent;
+
+  events$: Observable<any>;
 
   constructor(
     private fb: FormBuilder,
@@ -108,12 +134,20 @@ export class ScheduleComponent implements OnInit, AfterViewInit {
     this.selectRoomForm = this.fb.group({
       roomNames: ['', [Validators.required]],
     });
-    // this.spinnerService.show();
-    // setTimeout(() => {
-    //   this.spinnerService.hide();
-    // }, 5000);
-    // this.events$ = this.bookingService.getAllEvents();
-    // this.printEvents();
+
+    this.events$ = this.eventService.onLatestEvents();
+    this.printEvents();
+  }
+
+  printEvents() {
+    this.events$.subscribe((data) => {
+      this.events = data.data;
+      console.log(this.events);
+      this.roomEvents = this.events.filter(
+        (event: any) => event.roomId == this.selectedRoomId
+      );
+      this.getEventDetailsFromEvent();
+    });
   }
 
   get roomNames() {
@@ -128,6 +162,7 @@ export class ScheduleComponent implements OnInit, AfterViewInit {
       }
     });
     this.calendarOptions.events = this.roomEventsDetail;
+    this.calendarApi.render();
   }
 
   ngOnInit(): void {
@@ -142,20 +177,20 @@ export class ScheduleComponent implements OnInit, AfterViewInit {
         this.currentSelectedDate =
           this.route.snapshot.queryParams['selectedDate'] ||
           this.currentSelectedDate;
-        console.log(this.currentSelectedDate);
+        // console.log(this.currentSelectedDate);
         // this.calendarOptions.initialDate = this.currentSelectedDate;
         // this.calendarOptions.now = this.currentSelectedDate;
         // console.log(this.selectedRoomId);
 
         this.eventService.getEvents().subscribe(
           (data: any) => {
-            console.log(data.data);
+            // console.log(data.data);
             this.events = data.data;
             this.roomEvents = this.events.filter(
               (event: any) => event.roomId == this.selectedRoomId
             );
             this.getEventDetailsFromEvent();
-            console.log(this.roomEventsDetail);
+            // console.log(this.roomEventsDetail);
             // this.calendarOptions.events = this.roomEventsDetail;
             // console.log(this.roomEvents);
           },
@@ -173,10 +208,12 @@ export class ScheduleComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    // var calendarEl = document.getElementById('calendar')!;
-    // this.calendar = new Calendar(calendarEl, this.calendarOptions);
+    var calendarEl = document.getElementById('calendar')!;
+    this.calendar = new Calendar(calendarEl, this.calendarOptions);
     // console.log(this.calendar);
-    // const cal = this.calendar.nativeElement;
+    
+    this.calendarApi = this.calendarComponent.getApi();
+    console.log(this.calendarApi);
     // console.log(document.getElementById('rooms')!.options);
     let el: HTMLSelectElement = <HTMLSelectElement>(
       document.getElementById('rooms')
@@ -233,16 +270,13 @@ export class ScheduleComponent implements OnInit, AfterViewInit {
     );
   }
 
-  // printEvents() {
-  //   this.events$.subscribe((data) => {
-  //     console.log(data);
-  //   });
-  // }
   navigateToEvents() {
     this.router.navigate(['/events'], {
       queryParams: {
         roomId: this.selectedRoomId,
         selectedDate: this.currentSelectedDate,
+        startTime: this.currentSelectedTime.startTime,
+        endTime: this.currentSelectedTime.endTime,
       },
     });
   }
@@ -253,5 +287,28 @@ export class ScheduleComponent implements OnInit, AfterViewInit {
 
   navigateToAdmin() {
     this.router.navigateByUrl('/admin');
+  }
+
+  navigateToLogin() {
+    this.router.navigateByUrl('/login');
+  }
+
+  navigateToUserEdit() {
+    const user = JSON.parse(this.cookieService.get('user'));
+    console.log(user);
+    this.router.navigateByUrl('/userEdit', {
+      state: { userData: user },
+    });
+  }
+
+  isUserLoggedIn(): boolean {
+    const user_cookie = this.cookieService.get('user');
+    if (user_cookie) {
+      const user = JSON.parse(this.cookieService.get('user'));
+      if (user) {
+        return true;
+      }
+    }
+    return false;
   }
 }
