@@ -19,6 +19,7 @@ export class UserEditComponent implements OnInit {
     password: '',
   };
   userId: any;
+  errormsg = undefined;
 
   constructor(
     private fb: FormBuilder,
@@ -91,11 +92,16 @@ export class UserEditComponent implements OnInit {
           // );
         },
         (err: any) => {
+          this.errormsg = err.error.msg;
           console.log('Error while updating', err);
         }
       );
     } else {
       console.log('mismatch');
     }
+  }
+
+  onFocus() {
+    this.errormsg = undefined;
   }
 }
