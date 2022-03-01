@@ -18,6 +18,7 @@
             class="form-control"
             placeholder="Email id"
             formControlName="emailId"
+            (focus)="onFocus()"
           />
         </div>
         <div class="form-group">
@@ -27,8 +28,14 @@
             class="form-control"
             placeholder="Password"
             formControlName="password"
+            (focus)="onFocus()"
           />
         </div>
+
+        <div *ngIf="errormsg!==undefined" class="alert alert-danger">
+          <small *ngIf="errormsg!==undefined">{{errormsg}}</small>
+        </div>
+
         <button class="btn btn-black">Login</button>
         <button class="btn btn-secondary">Register</button>
         <br />

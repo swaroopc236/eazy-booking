@@ -31,8 +31,8 @@ export class BookingService implements OnDestroy {
       },
       {
         title: 'Event 3',
-        start: this.TODAY_STR,
-        allDay: true,
+        start: this.TODAY_STR + 'T11:00:00',
+        end: this.TODAY_STR + 'T12:00:00',
       },
       {
         title: 'Event 4',

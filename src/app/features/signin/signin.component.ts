@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, FormControl,Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
+import { Observable } from 'rxjs';
 import { AuthService } from '../services/auth.service';
+import { ConfirmedValidator } from './confirmed.validators';
 
 @Component({
   selector: 'app-signin',
@@ -10,11 +12,14 @@ import { AuthService } from '../services/auth.service';
   styleUrls: ['./signin.component.css'],
 })
 export class SigninComponent implements OnInit {
+
+  errormsg=undefined;
   signupForm: FormGroup;
   userDetails = {
     userName: '',
     emailId: '',
     password: '',
+    confirmPassword:''
   };
 
   constructor(
@@ -24,10 +29,12 @@ export class SigninComponent implements OnInit {
     private router: Router
   ) {
     this.signupForm = this.fb.group({
-      userName: ['', [Validators.required]],
-      emailId: ['', [Validators.required]],
+      userName: ['', [Validators.required,Validators.maxLength(15)]],
+      emailId: ['', [Validators.required,Validators.email]],
       password: ['', [Validators.required]],
       confirmPassword: ['', [Validators.required]],
+    },{ 
+      validator: ConfirmedValidator('password', 'confirmPassword')
     });
   }
 
@@ -43,10 +50,12 @@ export class SigninComponent implements OnInit {
   get confirmPassword() {
     return this.signupForm.get('confirmPassword');
   }
-
+  get f(){
+    return this.signupForm.controls;
+  }
   ngOnInit(): void {}
 
-  comparePasswords(p: string, cp: string): boolean {
+ comparePasswords(p: string, cp: string): boolean {
     if (p === cp) {
       return true;
     }
@@ -61,18 +70,25 @@ export class SigninComponent implements OnInit {
       this.userDetails.emailId = this.signupForm.value['emailId'];
       this.authService.signupUser(this.userDetails).subscribe(
         (data: any) => {
-          // console.log(data);
+
           this.cookieService.set('user', JSON.stringify(data.data[0]), {
             expires: 3,
           });
           this.router.navigate(['login']);
         },
+
         (err: any) => {
-          console.log('Error while registering', err);
+          this.errormsg=err.error.msg;
+          console.log('Error while registering',this.errormsg);
         }
+
       );
     } else {
       console.log('mismatch');
     }
   }
-}
+  //cheackEmail(control : FormControl): Promise<any> | Observable<any> {
+    onFocus(){
+      this.errormsg=undefined;
+    }
+  }

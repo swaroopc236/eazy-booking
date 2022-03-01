@@ -11,6 +11,7 @@ import { RoomService } from '../services/room.service';
 export class RoomEditComponent implements OnInit {
   roomForm: FormGroup;
   roomData: any;
+  errormsg: undefined;
   roomDetails: any = {
     roomId: '',
     roomName: '',
@@ -39,9 +40,15 @@ export class RoomEditComponent implements OnInit {
         console.log(data);
         this.router.navigateByUrl('/admin');
       },
-      (err) => {
-        console.log('Error in editing room', err);
+      (err: any) => {
+        this.errormsg=err.error.msg;
+        console.log('Error while registering',this.errormsg);
       }
     );
   }
+
+  onFocus(){
+    this.errormsg=undefined;
+  }
+  
 }

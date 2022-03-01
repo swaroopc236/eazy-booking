@@ -1,5 +1,22 @@
+.main-box {
+  display: flex;
+  flex-flow: column;
+  height: 100%;
+  flex: 0 1 auto;
+}
+
+.main-header {
+  flex: 0 1 auto;
+}
+
 .calendar-container {
+  flex: 1 1 auto;
   padding: 5px;
+  height: 100%;
+}
+
+.calendar {
+  overflow-y: scroll;
 }
 
 button {
@@ -16,4 +33,5 @@ button {
 }
 .navbar-header {
   width: 100%;
+  /* height: 100%; */
 }

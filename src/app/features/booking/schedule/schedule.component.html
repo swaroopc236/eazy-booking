@@ -1,17 +1,36 @@
-<nav class="navbar navbar-expand-lg bg-dark">
-  <a class="navbar-brand text-white bg-dark"><h1>Eazy Booking</h1></a>
-  <div class="navbar-header">
-    <button class="btn btn-black" type="submit" (click)="navigateToAdmin()">
-      Admin
-    </button>
+<div class="main-box">
+  <div class="main-header">
+    <nav class="navbar navbar-expand-lg bg-dark">
+      <a class="navbar-brand text-white bg-dark"><h1>Eazy Booking</h1></a>
+      <div class="navbar-header">
+        <button class="btn btn-black" type="submit" (click)="navigateToAdmin()">
+          Admin
+        </button>
 
-    <button class="btn btn-black" type="submit" (click)="navigateToEvents()">
-      Add Events
-    </button>
-    <button class="btn btn-danger" (click)="logoutUser()">Logout</button>
+        <button
+          class="btn btn-black"
+          type="submit"
+          (click)="navigateToEvents()"
+        >
+          Add Events
+        </button>
+        <button class="btn btn-danger" (click)="logoutUser()">Logout</button>
+      </div>
+    </nav>
   </div>
-</nav>
 
-<div class="calendar-container">
-  <full-calendar [options]="calendarOptions"></full-calendar>
+  <div class="calendar-container">
+    <div>
+      <form [formGroup]="selectRoomForm">
+        <select name="rooms" id="rooms" (change)="onChange($event)">
+          <option *ngFor="let room of rooms" value="{{ room.roomId }}">
+            {{ room.roomName }}
+          </option>
+        </select>
+      </form>
+    </div>
+    <div class="calendar">
+      <full-calendar [options]="calendarOptions"></full-calendar>
+    </div>
+  </div>
 </div>
