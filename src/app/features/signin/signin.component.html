@@ -18,7 +18,9 @@
             class="form-control"
             placeholder="User Name"
             formControlName="userName"
+            required
           />
+
         </div>
         <div class="form-group">
           <label>Email</label>
@@ -27,7 +29,14 @@
             class="form-control"
             placeholder="Email"
             formControlName="emailId"
+            (focus)="onFocus()"
+            required
           />
+  
+          <div *ngIf="errormsg!==undefined" class="alert alert-danger">
+            <small *ngIf="errormsg!==undefined">{{errormsg}}</small>
+          </div>
+
         </div>
         <div class="form-group">
           <label>Password</label>
@@ -37,6 +46,9 @@
             placeholder="Password"
             formControlName="password"
           />
+          <div *ngIf="f.password.touched && f.password.invalid" class="alert alert-danger">
+            <small *ngIf="f.password.errors?.required">Password is required.</small>
+          </div>
         </div>
         <div class="form-group">
           <label>Confirm Password</label>
@@ -45,7 +57,13 @@
             class="form-control"
             placeholder="Password"
             formControlName="confirmPassword"
+            required
           />
+          <div *ngIf="f.confirmPassword.touched && f.confirmPassword.invalid" class="alert alert-danger">
+            <small *ngIf="f.confirmPassword.errors?.required">Password is required.</small>
+            <small *ngIf="f.confirmPassword.errors?.confirmedValidator">Password and Confirm Password must be match.</small>
+        </div>
+
         </div>
         <button class="btn btn-black">Sign In</button>
         <button type="cancel" class="btn btn-secondary">Cancel</button>

@@ -12,6 +12,7 @@ import { RoomService } from '../services/room.service';
 export class RoomEditComponent implements OnInit {
   roomForm: FormGroup;
   roomData: any;
+  errormsg: undefined;
   roomDetails: any = {
     roomId: '',
     roomName: '',
@@ -41,12 +42,17 @@ export class RoomEditComponent implements OnInit {
       (data: any) => {
         console.log(data);
         this.spinnerService.hide();
-        this.router.navigateByUrl('/admin', {replaceUrl: true});
+        this.router.navigateByUrl('/admin', { replaceUrl: true });
       },
       (err) => {
+        this.errormsg = err.error.msg;
         console.log('Error in editing room', err);
         this.spinnerService.hide();
       }
     );
+  }
+
+  onFocus() {
+    this.errormsg = undefined;
   }
 }

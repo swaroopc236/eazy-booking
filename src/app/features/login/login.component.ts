@@ -13,6 +13,7 @@ import { AuthService } from '../services/auth.service';
 })
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
+  errormsg: undefined;
   userDetails = {
     emailId: '',
     password: '',
@@ -28,7 +29,7 @@ export class LoginComponent implements OnInit {
     private route: ActivatedRoute
   ) {
     this.loginForm = this.fb.group({
-      emailId: ['', [Validators.required]],
+      emailId: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required]],
     });
   }
@@ -61,6 +62,7 @@ export class LoginComponent implements OnInit {
         this.router.navigateByUrl(this.returnUrl, { replaceUrl: true });
       },
       (err) => {
+        this.errormsg = err.error.msg;
         console.log('Error in credentials', err);
         this.spinnerService.hide();
       }
@@ -69,5 +71,9 @@ export class LoginComponent implements OnInit {
 
   navigateToSignin() {
     this.router.navigateByUrl('/signin');
+    this.errormsg = undefined;
+  }
+  onFocus() {
+    this.errormsg = undefined;
   }
 }

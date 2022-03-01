@@ -10,6 +10,7 @@ import { RoomService } from '../services/room.service';
   styleUrls: ['./room-add.component.css'],
 })
 export class RoomAddComponent implements OnInit {
+  errormsg: undefined;
   roomForm: FormGroup;
   roomDetails: any = {
     roomName: '',
@@ -35,12 +36,16 @@ export class RoomAddComponent implements OnInit {
       (data: any) => {
         console.log(data);
         this.spinnerService.hide();
-        this.router.navigateByUrl('/admin', {replaceUrl: true});
+        this.router.navigateByUrl('/admin', { replaceUrl: true });
       },
       (err) => {
+        this.errormsg = err.error.msg;
         console.log('Error in adding room', err);
         this.spinnerService.hide();
       }
     );
+  }
+  onFocus() {
+    this.errormsg = undefined;
   }
 }
