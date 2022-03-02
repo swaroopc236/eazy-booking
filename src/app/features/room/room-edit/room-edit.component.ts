@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { NgxSpinnerService } from 'ngx-spinner';
+// import { NgxSpinnerService } from 'ngx-spinner';
 import { RoomService } from '../services/room.service';
 
 @Component({
@@ -21,7 +21,7 @@ export class RoomEditComponent implements OnInit {
   constructor(
     private roomService: RoomService,
     private fb: FormBuilder,
-    private spinnerService: NgxSpinnerService,
+    // private spinnerService: NgxSpinnerService,
     private router: Router
   ) {
     this.roomData = this.router.getCurrentNavigation()?.extras.state;
@@ -37,17 +37,17 @@ export class RoomEditComponent implements OnInit {
 
   editRoom() {
     this.roomDetails.roomName = this.roomForm.value['roomName'];
-    this.spinnerService.show();
+    // this.spinnerService.show();
     this.roomService.editRoom(this.roomDetails).subscribe(
       (data: any) => {
         console.log(data);
-        this.spinnerService.hide();
+        // this.spinnerService.hide();
         this.router.navigateByUrl('/admin', { replaceUrl: true });
       },
       (err) => {
         this.errormsg = err.error.msg;
         console.log('Error in editing room', err);
-        this.spinnerService.hide();
+        // this.spinnerService.hide();
       }
     );
   }

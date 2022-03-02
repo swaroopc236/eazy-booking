@@ -21,8 +21,8 @@
             formControlName="roomName"
             (focus)="onFocus()"
           />
-          <div *ngIf="errormsg!==undefined" class="alert alert-danger">
-            <small *ngIf="errormsg!==undefined">{{errormsg}}</small>
+          <div *ngIf="errormsg !== undefined" class="alert alert-danger">
+            <small *ngIf="errormsg !== undefined">{{ errormsg }}</small>
           </div>
         </div>
         <button type="submit" class="btn btn-black" (click)="editRoom()">
@@ -33,12 +33,12 @@
       </form>
     </div>
   </div>
-  <ngx-spinner
+  <!-- <ngx-spinner
     bdColor="rgba(0, 0, 0, 0.8)"
     size="medium"
     color="#fff"
     type="ball-pulse"
     [fullScreen]="true"
     ><p style="color: white">Loading...</p></ngx-spinner
-  >
+  > -->
 </div>
