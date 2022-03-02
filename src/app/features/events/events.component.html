@@ -31,6 +31,7 @@
             max="18:00"
             required
             formControlName="eventStart"
+            (focus) = "errormsg = undefined"
           />
         </div>
         <div class="form-group">
@@ -43,8 +44,12 @@
             max="18:00"
             required
             formControlName="eventEnd"
+            (focus) = "errormsg = undefined"
           />
           <small>Office hours are 9am to 6pm</small>
+        </div>
+        <div *ngIf="errormsg!==undefined" class="alert alert-danger">
+          <small>{{errormsg}}</small>
         </div>
         <button class="btn btn-black">Submit</button>
         <button (click)="onCancel()" class="btn btn-secondary">Cancel</button>

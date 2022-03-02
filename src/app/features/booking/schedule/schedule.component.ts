@@ -46,6 +46,7 @@ export class ScheduleComponent implements OnInit, AfterViewInit {
 
   timeSelect = (selectInfo: any) => {
     // console.log(new Date().getTime());
+    this.currentSelectedDate = selectInfo.startStr.substring(0, 10);
     const startDate = selectInfo.startStr.substring(8, 10);
     const endDate = selectInfo.endStr.substring(8, 10);
     if (startDate !== endDate) {
@@ -71,7 +72,7 @@ export class ScheduleComponent implements OnInit, AfterViewInit {
 
   dateSelect = (dateInfo: any) => {
     this.currentSelectedDate = dateInfo.startStr.split('T')[0];
-    console.log(this.currentSelectedDate);
+    // console.log(this.currentSelectedDate);
   };
 
   canSelect() {
@@ -80,18 +81,19 @@ export class ScheduleComponent implements OnInit, AfterViewInit {
 
   viewManipulation(view: ViewMountArg) {
     // this.currentView = view;
-    // console.log(view);
+    // console.log("view mani");
   }
 
   cellManipulation(cell: SlotLaneMountArg) {
+    // console.log(cell.view);
     const currentDateTime = Date.now() - 900000;
     const todayDateTime = new Date(new Date().toDateString()).getTime();
     const slotDateTime = cell.time!.milliseconds;
 
-    // console.log(this.currentSelectedDate);
+    // console.log("cell mani");
 
     if (currentDateTime > todayDateTime + slotDateTime) {
-      cell.el.style.backgroundColor = 'lightgrey';
+      cell.el.style.backgroundColor = 'darkgrey';
     }
     // console.log(new Date(new Date().toDateString()).getTime());
     // console.log(cell.time?.milliseconds);
@@ -116,8 +118,8 @@ export class ScheduleComponent implements OnInit, AfterViewInit {
     select: this.timeSelect,
     eventClick: this.eventSelect,
     datesSet: this.dateSelect,
-    slotLaneDidMount: this.cellManipulation,
-    viewDidMount: this.viewManipulation,
+    // slotLaneDidMount: this.cellManipulation,
+    // viewDidMount: this.viewManipulation,
   };
 
   @ViewChild('calendar') calendarComponent!: FullCalendarComponent;
@@ -143,7 +145,7 @@ export class ScheduleComponent implements OnInit, AfterViewInit {
     this.isAdmin = this.authService.isAdmin();
 
     this.events$ = this.eventService.onLatestEvents();
-    this.printEvents();
+    // this.printEvents();
   }
 
   printEvents() {
@@ -215,12 +217,12 @@ export class ScheduleComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    var calendarEl = document.getElementById('calendar')!;
-    this.calendar = new Calendar(calendarEl, this.calendarOptions);
+    // var calendarEl = document.getElementById('calendar')!;
+    // this.calendar = new Calendar(calendarEl, this.calendarOptions);
     // console.log(this.calendar);
 
     this.calendarApi = this.calendarComponent.getApi();
-    console.log(this.calendarApi);
+    // console.log(this.calendarApi);
     // console.log(document.getElementById('rooms')!.options);
     let el: HTMLSelectElement = <HTMLSelectElement>(
       document.getElementById('rooms')
