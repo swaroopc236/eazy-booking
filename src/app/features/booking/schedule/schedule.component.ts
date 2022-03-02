@@ -145,16 +145,18 @@ export class ScheduleComponent implements OnInit, AfterViewInit {
     this.isAdmin = this.authService.isAdmin();
 
     this.events$ = this.eventService.onLatestEvents();
-    // this.printEvents();
+    this.printEvents();
   }
 
   printEvents() {
     this.events$.subscribe((data) => {
       this.events = data.data;
       console.log(this.events);
+      console.log('Selected room', this.selectedRoomId);
       this.roomEvents = this.events.filter(
         (event: any) => event.roomId == this.selectedRoomId
       );
+      console.log(this.roomEvents);
       this.getEventDetailsFromEvent();
     });
   }
@@ -170,8 +172,9 @@ export class ScheduleComponent implements OnInit, AfterViewInit {
         this.roomEventsDetail.push(e.eventDetails);
       }
     });
+    console.log(this.roomEventsDetail);
     this.calendarOptions.events = this.roomEventsDetail;
-    this.calendarApi.render();
+    // this.calendarApi.render();
   }
 
   ngOnInit(): void {
