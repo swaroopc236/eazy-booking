@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "node server.js",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
@@ -28,7 +28,6 @@
     "bootstrap": "^4.5.0",
     "express": "^4.17.3",
     "ngx-cookie-service": "^13.1.2",
-    "ngx-spinner": "^11.0.2",
     "path": "^0.12.7",
     "rxjs": "~6.6.0",
     "socket.io-client": "^4.4.1",
