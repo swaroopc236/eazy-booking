@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
-import { NgxSpinnerService } from 'ngx-spinner';
+// import { NgxSpinnerService } from 'ngx-spinner';
 import { EventService } from '../booking/services/event.service';
 import { AuthService } from '../services/auth.service';
 
@@ -33,7 +33,7 @@ export class EventEditComponent implements OnInit {
     private eventService: EventService,
     private authService: AuthService,
     private cookieService: CookieService,
-    private spinnerService: NgxSpinnerService,
+    // private spinnerService: NgxSpinnerService,
     private router: Router,
     private route: ActivatedRoute
   ) {
@@ -80,25 +80,28 @@ export class EventEditComponent implements OnInit {
     this.event.eventDetails.end = this.eventForm.value['eventEnd'] + ':00';
 
     console.log(this.event);
-    this.eventService.isOverlapping(this.event, this.selectedDate).then((isOverlap) => {
-      if(isOverlap) {
-        this.errormsg = 'The event conflicts with another event. Please choose a time slot that is free.';
-      } else {
-        this.spinnerService.show();
-        this.eventService.editEvent(this.event, this.selectedDate).subscribe(
-          (data: any) => {
-            this.spinnerService.hide();
-            this.router.navigate(['/myEvents'], {replaceUrl: true});
-          },
-          (err) => {
-            console.log('Error in editing event', err);
-            this.spinnerService.hide();
-          }
-        );
+    this.eventService.isOverlapping(this.event, this.selectedDate).then(
+      (isOverlap) => {
+        if (isOverlap) {
+          this.errormsg =
+            'The event conflicts with another event. Please choose a time slot that is free.';
+        } else {
+          // this.spinnerService.show();
+          this.eventService.editEvent(this.event, this.selectedDate).subscribe(
+            (data: any) => {
+              // this.spinnerService.hide();
+              this.router.navigate(['/myEvents'], { replaceUrl: true });
+            },
+            (err) => {
+              console.log('Error in editing event', err);
+              // this.spinnerService.hide();
+            }
+          );
+        }
+      },
+      (err) => {
+        console.log(err);
       }
-    }, (err) => {
-      console.log(err);
-    })
-    
+    );
   }
 }

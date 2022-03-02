@@ -16,7 +16,7 @@ import { EventsComponent } from '../../events/events.component';
 import { RoomService } from '../../room/services/room.service';
 import { EventService } from '../services/event.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { NgxSpinner, NgxSpinnerService } from 'ngx-spinner';
+// import { NgxSpinner, NgxSpinnerService } from 'ngx-spinner';
 import { getCurrencySymbol } from '@angular/common';
 
 @Component({
@@ -133,7 +133,7 @@ export class ScheduleComponent implements OnInit, AfterViewInit {
     private roomService: RoomService,
     private eventService: EventService,
     private cookieService: CookieService,
-    private spinnerService: NgxSpinnerService,
+    // private spinnerService: NgxSpinnerService,
     private router: Router,
     private route: ActivatedRoute
   ) {
@@ -210,11 +210,11 @@ export class ScheduleComponent implements OnInit, AfterViewInit {
             console.log('Error in getting events', err);
           }
         );
-        this.spinnerService.hide();
+        // this.spinnerService.hide();
       },
       (err) => {
         console.log('Error in getting rooms', err);
-        this.spinnerService.hide();
+        // this.spinnerService.hide();
       }
     );
   }
