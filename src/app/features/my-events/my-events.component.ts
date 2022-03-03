@@ -20,7 +20,6 @@ export class MyEventsComponent implements OnInit {
     private router: Router
   ) {
     this.userId = JSON.parse(this.cookieService.get('user')).userId;
-    console.log(this.userId);
   }
 
   ngOnInit(): void {
@@ -31,12 +30,12 @@ export class MyEventsComponent implements OnInit {
     // this.spinnerService.show();
     this.eventService.getEvents().subscribe(
       (data: any) => {
-        console.log(data.data);
+        // console.log(data.data);
         this.allEvents = data.data;
         this.myEvents = this.allEvents.filter(
           (event: any) => event.userId == this.userId
         );
-        console.log(this.myEvents);
+        // console.log(this.myEvents);
         // this.spinnerService.hide();
       },
       (err) => {
@@ -59,5 +58,21 @@ export class MyEventsComponent implements OnInit {
 
   editEvent(event: any) {
     this.router.navigate(['/eventEdit'], { state: { eventData: event } });
+  }
+
+  getReadableDate(date: string) {
+    const eventDate = date.split('T')[0];
+    let readableDate = new Date(eventDate).toDateString();
+    readableDate = readableDate.substring(4, 10) + ', ' + readableDate.substring(11, 15);
+    return readableDate;
+  }
+
+  getReadableTime(date: string) {
+    var timeString = date.split('T')[1];
+    var H = +timeString.substring(0, 2);
+    var h = H % 12 || 12;
+    var ampm = (H < 12 || H === 24) ? "am" : "pm";
+    timeString = h + timeString.substring(2, 5) + ' ' + ampm;
+    return timeString;
   }
 }

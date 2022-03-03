@@ -5,3 +5,11 @@ body {
   height: 100%;
   font-size: small;
 }
+
+.fa-solid {
+  padding: 5px;
+}
+
+.fa-solid:hover {
+  cursor: pointer;
+}

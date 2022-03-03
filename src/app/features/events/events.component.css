@@ -75,3 +75,17 @@ body {
 .sss{
     margin-top: 20%;
 }
+
+.buttons {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.btn {
+    margin: 5px;
+}
+
+.btn-secondary {
+    margin-right: 0;
+}

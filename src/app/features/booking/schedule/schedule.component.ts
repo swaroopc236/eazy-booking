@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, Renderer2, ViewChild } from '@angular/core';
 import {
   CalendarOptions,
   Calendar,
@@ -16,8 +16,8 @@ import { EventsComponent } from '../../events/events.component';
 import { RoomService } from '../../room/services/room.service';
 import { EventService } from '../services/event.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+// import { URLSearchParams } from 'url';
 // import { NgxSpinner, NgxSpinnerService } from 'ngx-spinner';
-import { getCurrencySymbol } from '@angular/common';
 
 @Component({
   selector: 'app-schedule',
@@ -29,10 +29,8 @@ export class ScheduleComponent implements OnInit, AfterViewInit {
   rooms: any;
   events: any;
   roomEvents: any;
-  selectRoomForm: FormGroup;
   roomEventsDetail: any = [];
 
-  calendar: any;
   calendarApi: any;
   currentSelectedDate: any;
   currentSelectedTime = {
@@ -44,15 +42,17 @@ export class ScheduleComponent implements OnInit, AfterViewInit {
   isUserLoggedIn: boolean;
   isAdmin: boolean;
 
+  urlParams = new URLSearchParams(window.location.search);
+
   timeSelect = (selectInfo: any) => {
-    // console.log(new Date().getTime());
-    this.currentSelectedDate = selectInfo.startStr.substring(0, 10);
+    // console.log(selectInfo.startStr, selectInfo.endStr);
     const startDate = selectInfo.startStr.substring(8, 10);
     const endDate = selectInfo.endStr.substring(8, 10);
     if (startDate !== endDate) {
       this.calendarApi.unselect();
       return;
     }
+    this.currentSelectedDate = selectInfo.startStr.substring(0, 10);
     console.log('successful selection');
     this.currentSelectedTime.startTime = selectInfo.startStr
       .split('T')[1]
@@ -72,6 +72,9 @@ export class ScheduleComponent implements OnInit, AfterViewInit {
 
   dateSelect = (dateInfo: any) => {
     this.currentSelectedDate = dateInfo.startStr.split('T')[0];
+    this.urlParams.set('selectedDate', this.currentSelectedDate);
+    let newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?' + this.urlParams.toString();
+    window.history.replaceState({path: newurl}, '', newurl);
     // console.log(this.currentSelectedDate);
   };
 
@@ -102,8 +105,9 @@ export class ScheduleComponent implements OnInit, AfterViewInit {
   calendarOptions: CalendarOptions = {
     allDaySlot: false,
     slotDuration: '00:15:00',
-    scrollTime: '09:00:00',
+    scrollTime: new Date().toTimeString().substring(0, 8),
     nowIndicator: true,
+    dayMaxEvents: true,
     headerToolbar: {
       start: 'title',
       center: 'today prev,next',
@@ -137,16 +141,13 @@ export class ScheduleComponent implements OnInit, AfterViewInit {
     private router: Router,
     private route: ActivatedRoute
   ) {
-    this.selectRoomForm = this.fb.group({
-      roomNames: ['', [Validators.required]],
-    });
-
     this.isUserLoggedIn = this.authService.isAuthenticated();
     this.isAdmin = this.authService.isAdmin();
 
     this.events$ = this.eventService.onLatestEvents();
     this.printEvents();
   }
+
 
   printEvents() {
     this.events$.subscribe((data) => {
@@ -161,10 +162,6 @@ export class ScheduleComponent implements OnInit, AfterViewInit {
     });
   }
 
-  get roomNames() {
-    return this.selectRoomForm.get('roomNames');
-  }
-
   getEventDetailsFromEvent() {
     this.roomEventsDetail = [];
     this.roomEvents.filter((e: any) => {
@@ -172,12 +169,13 @@ export class ScheduleComponent implements OnInit, AfterViewInit {
         this.roomEventsDetail.push(e.eventDetails);
       }
     });
-    console.log(this.roomEventsDetail);
+    // console.log(this.roomEventsDetail);
     this.calendarOptions.events = this.roomEventsDetail;
     // this.calendarApi.render();
   }
 
   ngOnInit(): void {
+
     // this.spinnerService.show();
     this.roomService.getRooms().subscribe(
       (data: any) => {
@@ -186,13 +184,25 @@ export class ScheduleComponent implements OnInit, AfterViewInit {
         this.selectedRoomId =
           this.route.snapshot.queryParams['selectedRoomId'] ||
           this.rooms[0].roomId;
+
+        this.urlParams.set('selectedRoomId', this.selectedRoomId);
+
         this.currentSelectedDate =
           this.route.snapshot.queryParams['selectedDate'] ||
           this.currentSelectedDate;
-        // console.log(this.currentSelectedDate);
-        // this.calendarOptions.initialDate = this.currentSelectedDate;
-        // this.calendarOptions.now = this.currentSelectedDate;
-        // console.log(this.selectedRoomId);
+
+        this.calendarApi.gotoDate(this.currentSelectedDate);
+
+        // this.eventService.socket.on('LATEST_EVENTS', (data: any) => {
+        //   // console.log(data);
+        //   this.events = data.data;
+        //   // console.log(this.events);
+        //   this.roomEvents = this.events.filter(
+        //     (event: any) => event.roomId === this.selectedRoomId
+        //   );
+        //   // console.log(this.roomEvents);
+        //   this.getEventDetailsFromEvent();
+        // })
 
         this.eventService.getEvents().subscribe(
           (data: any) => {
@@ -202,9 +212,6 @@ export class ScheduleComponent implements OnInit, AfterViewInit {
               (event: any) => event.roomId == this.selectedRoomId
             );
             this.getEventDetailsFromEvent();
-            // console.log(this.roomEventsDetail);
-            // this.calendarOptions.events = this.roomEventsDetail;
-            // console.log(this.roomEvents);
           },
           (err) => {
             console.log('Error in getting events', err);
@@ -220,54 +227,23 @@ export class ScheduleComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    // var calendarEl = document.getElementById('calendar')!;
-    // this.calendar = new Calendar(calendarEl, this.calendarOptions);
-    // console.log(this.calendar);
-
     this.calendarApi = this.calendarComponent.getApi();
-    // console.log(this.calendarApi);
-    // console.log(document.getElementById('rooms')!.options);
-    let el: HTMLSelectElement = <HTMLSelectElement>(
-      document.getElementById('rooms')
-    );
-    el.options.selectedIndex = 4;
-    el.value = this.selectedRoomId;
-    // console.log(el.options.selectedIndex);
-    // console.log(el.value);
-    try {
-      // console.log(el.options[2]);
-      for (var i = 0; i < el.options.length; i++) {
-        console.log('current id', el.options[i].value);
-        if (el.options[i].value === this.selectedRoomId) {
-          console.log('matched value');
-          el.options[i].selected = true;
-          el.selectedIndex = i;
-          break;
-        }
-      }
-    } catch (e) {
-      console.log('Exception occured', e);
-    }
 
-    // console.log(el.options);
+    let date = new Date();
+    let currentTime = '0' + Math.abs(date.getHours() - 2) + ':' + ('0' + date.getMinutes()).slice(-2) + ':' + '00';
+    this.calendarApi.scrollToTime(currentTime);
   }
 
   onChange($event: any) {
     this.selectedRoomId = $event.target.value;
-    this.eventService.currentRoom = this.selectedRoomId;
-    let el: HTMLSelectElement = <HTMLSelectElement>(
-      document.getElementById('rooms')
-    );
-    // el.selectedIndex = this.selectedRoomId;
-    // console.log(el.selectedIndex);
-    // console.log(el.value);
+    this.urlParams.set('selectedRoomId', this.selectedRoomId);
+    let newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?' + this.urlParams.toString();
+    window.history.replaceState({path: newurl}, '', newurl);
+  
     this.roomEvents = this.events.filter(
       (event: any) => event.roomId == this.selectedRoomId
     );
     this.getEventDetailsFromEvent();
-    // this.calendarOptions.events = this.roomEventsDetail;
-    // console.log(this.calendarOptions.events);
-    console.log(this.roomEvents);
   }
 
   logoutUser() {
@@ -275,6 +251,8 @@ export class ScheduleComponent implements OnInit, AfterViewInit {
       (data) => {
         console.log(data);
         this.cookieService.delete('user');
+        this.isUserLoggedIn = false;
+        this.isAdmin = false;
       },
       (err) => {
         console.log('Error while logging out', err);
@@ -294,7 +272,7 @@ export class ScheduleComponent implements OnInit, AfterViewInit {
   }
 
   navigateToMyEvents() {
-    this.router.navigateByUrl('/myEvents');
+    this.router.navigateByUrl('/myEvents', { state: { selectedRoomId: this.selectedRoomId}});
   }
 
   navigateToAdmin() {
@@ -312,15 +290,4 @@ export class ScheduleComponent implements OnInit, AfterViewInit {
       state: { userData: user },
     });
   }
-
-  // isUserLoggedIn(): boolean {
-  //   const user_cookie = this.cookieService.get('user');
-  //   if (user_cookie) {
-  //     const user = JSON.parse(this.cookieService.get('user'));
-  //     if (user) {
-  //       return true;
-  //     }
-  //   }
-  //   return false;
-  // }
 }

@@ -75,3 +75,20 @@ body {
 .sss {
   margin-top: 20%;
 }
+
+h5 {
+  display: inline;
+}
+
+.fa-calendar-plus {
+  margin-left: 0px;
+  margin-right: 5px;
+}
+
+.fa-pen-to-square {
+  color: blue;
+}
+
+.fa-trash-can {
+  color: red;
+}

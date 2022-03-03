@@ -17,24 +17,8 @@ export class EventService {
   EVENTS_URL: string = 'https://eazy-booking-staging.herokuapp.com/events';
   TODAY_STR = new Date().toISOString();
 
-  socket: any;
+  public socket: any;
   constructor(private http: HttpClient) {
-    // this.ws = new WebSocket(this.WS_ENDPOINT_LOCAL);
-    // this.ws = new WebSocket(this.WS_ENDPOINT_REMOTE);
-    // console.log(this.ws);
-
-    // this.ws.onopen = () => {
-    //   console.log('Open');
-    // };
-    // this.ws.onmessage = (data: any) => {
-    //   console.log(JSON.parse(data.data).data);
-    // };
-    // this.ws.onerror = (err: any) => {
-    //   console.log('Something went wrong - ', err);
-    // };
-    // this.ws.onclose = (data: any) => {
-    //   console.log('Disconnected');
-    // };
 
     this.socket = io(this.WS_ENDPOINT_REMOTE);
 
