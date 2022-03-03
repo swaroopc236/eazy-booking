@@ -52,14 +52,32 @@
             >
           </div>
         </div>
-
-        <!-- <button
-          class="btn btn-black"
-          type="submit"
-          (click)="navigateToEvents()"
+      </div>
+      <div class="btn-group">
+        <button
+          type="button"
+          class="btn btn-black dropdown-toggle"
+          data-toggle="dropdown"
+          aria-haspopup="true"
+          aria-expanded="false"
         >
-          Add Events
-        </button> -->
+          HELP!
+        </button>
+        <div class="dropdown-menu">
+          <a
+            class="dropdown-item"
+            type="submit"
+            (click)="navigateToHelpPage()"
+            >Booking Events?</a
+          >
+          <a
+              class="dropdown-item"
+              type="submit"
+              (click)="navigateToHelpRoomEvents()"
+              *ngIf="isAdmin"
+              >Editing Room?</a
+            >
+        </div>
       </div>
     </nav>
   </div>

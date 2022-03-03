@@ -14,6 +14,8 @@ import { MyEventsComponent } from './features/my-events/my-events.component';
 import { EventEditComponent } from './features/event-edit/event-edit.component';
 import { NoAuthGuard } from './features/services/no-auth.guard';
 import { UserEditComponent } from './features/user-edit/user-edit.component';
+import { HelpComponent } from './features/help/help.component';
+import { HelproomComponent } from './features/helproom/helproom.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'schedule', pathMatch: 'full' },
@@ -23,6 +25,8 @@ const routes: Routes = [
   { path: 'events', component: EventsComponent, canActivate: [AuthGuard] },
   { path: 'room-add', component: RoomAddComponent },
   { path: 'room-edit', component: RoomEditComponent },
+  { path: 'help', component: HelpComponent},
+  { path: 'helproom', component: HelproomComponent},
   { path: 'admin', component: AdminPageComponent, canActivate: [RoleGuard] },
   { path: 'myEvents', component: MyEventsComponent, canActivate: [AuthGuard] },
   {

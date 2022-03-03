@@ -22,6 +22,8 @@ import { EventEditComponent } from './features/event-edit/event-edit.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { UserEditComponent } from './features/user-edit/user-edit.component';
+import { HelpComponent } from './features/help/help.component';
+import { HelproomComponent } from './features/helproom/helproom.component';
 //import { EventComponent } from './features/events/services/event/event.component';
 
 // register FullCalendar plugins
@@ -45,6 +47,8 @@ FullCalendarModule.registerPlugins([
     MyEventsComponent,
     EventEditComponent,
     UserEditComponent,
+    HelpComponent,
+    HelproomComponent,
   ],
   imports: [
     BrowserModule,
