@@ -32,8 +32,8 @@
           />
         </div>
 
-        <div *ngIf="errormsg!==undefined" class="alert alert-danger">
-          <small *ngIf="errormsg!==undefined">{{errormsg}}</small>
+        <div *ngIf="errormsg !== undefined" class="alert alert-danger">
+          <small *ngIf="errormsg !== undefined">{{ errormsg }}</small>
         </div>
 
         <button class="btn btn-black">Login</button>
@@ -47,12 +47,12 @@
       </form>
     </div>
   </div>
-  <ngx-spinner
+  <!-- <ngx-spinner
     bdColor="rgba(0, 0, 0, 0.8)"
     size="medium"
     color="#fff"
     type="ball-pulse"
     [fullScreen]="true"
     ><p style="color: white">Loading...</p></ngx-spinner
-  >
+  > -->
 </div>

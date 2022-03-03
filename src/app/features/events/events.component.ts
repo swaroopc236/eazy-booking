@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
-import { NgxSpinnerService } from 'ngx-spinner';
+// import { NgxSpinnerService } from 'ngx-spinner';
 import { EventService } from '../booking/services/event.service';
 import { AuthService } from '../services/auth.service';
 
@@ -14,6 +14,8 @@ import { AuthService } from '../services/auth.service';
 export class EventsComponent implements OnInit {
   eventForm: FormGroup;
   roomId: any;
+  events: any;
+  roomEvents: any;
   selectedDate: any;
   selectedTime = {
     startTime: '',
@@ -28,13 +30,14 @@ export class EventsComponent implements OnInit {
       end: '',
     },
   };
+  errormsg: any = undefined;
 
   constructor(
     private fb: FormBuilder,
     private eventService: EventService,
     private authService: AuthService,
     private cookieService: CookieService,
-    private spinnerService: NgxSpinnerService,
+    // private spinnerService: NgxSpinnerService,
     private router: Router,
     private route: ActivatedRoute
   ) {
@@ -75,25 +78,34 @@ export class EventsComponent implements OnInit {
     this.event.roomId = this.roomId;
 
     console.log(this.event);
-    // this.eventService.addEvent(this.event);
-    // this.router.navigate(['/schedule'], {
-    //   queryParams: { selectedRoomId: this.roomId },
-    // });
-    this.spinnerService.show();
-    this.eventService.addEvent(this.event, this.selectedDate).subscribe(
-      (data: any) => {
-        this.spinnerService.hide();
-        this.router.navigate(['/schedule'], {
-          queryParams: {
-            selectedRoomId: this.roomId,
-            selectedDate: this.selectedDate,
-          },
-          replaceUrl: true,
-        });
+
+    this.eventService.isOverlapping(this.event, this.selectedDate).then(
+      (isOverlap) => {
+        if (isOverlap) {
+          this.errormsg =
+            'The event you are trying to create conflicts with another event. Try changing the time or room.';
+        } else {
+          // this.spinnerService.show();
+          this.eventService.addEvent(this.event, this.selectedDate).subscribe(
+            (data: any) => {
+              // this.spinnerService.hide();
+              this.router.navigate(['/schedule'], {
+                queryParams: {
+                  selectedRoomId: this.roomId,
+                  selectedDate: this.selectedDate,
+                },
+                replaceUrl: true,
+              });
+            },
+            (err) => {
+              console.log('Error in adding event', err);
+              // this.spinnerService.hide();
+            }
+          );
+        }
       },
       (err) => {
-        console.log('Error in adding event', err);
-        this.spinnerService.hide();
+        console.log(err);
       }
     );
   }

@@ -46,7 +46,7 @@ export class AuthService implements CanActivate {
     const user_cookie = this.cookieService.get('user');
     if (user_cookie) {
       const user = JSON.parse(this.cookieService.get('user'));
-      console.log(user);
+      // console.log(user);
       if (user) {
         return true;
       }

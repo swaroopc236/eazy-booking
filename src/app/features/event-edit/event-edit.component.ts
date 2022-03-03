@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
-import { NgxSpinnerService } from 'ngx-spinner';
+// import { NgxSpinnerService } from 'ngx-spinner';
 import { EventService } from '../booking/services/event.service';
 import { AuthService } from '../services/auth.service';
 
@@ -24,7 +24,8 @@ export class EventEditComponent implements OnInit {
       end: '',
     },
   };
-
+  selectedDate: string;
+  errormsg: any = undefined;
   eventData: any;
 
   constructor(
@@ -32,7 +33,7 @@ export class EventEditComponent implements OnInit {
     private eventService: EventService,
     private authService: AuthService,
     private cookieService: CookieService,
-    private spinnerService: NgxSpinnerService,
+    // private spinnerService: NgxSpinnerService,
     private router: Router,
     private route: ActivatedRoute
   ) {
@@ -45,6 +46,9 @@ export class EventEditComponent implements OnInit {
     this.event.eventDetails.title = this.eventData.eventData.eventDetails.title;
     this.event.eventDetails.start = this.eventData.eventData.eventDetails.start;
     this.event.eventDetails.end = this.eventData.eventData.eventDetails.end;
+
+    this.selectedDate = this.event.eventDetails.start.split('T')[0];
+    console.log(this.selectedDate);
     var timeStart = this.event.eventDetails.start.split('T')[1];
     var timeEnd = this.event.eventDetails.end.split('T')[1];
 
@@ -76,15 +80,27 @@ export class EventEditComponent implements OnInit {
     this.event.eventDetails.end = this.eventForm.value['eventEnd'] + ':00';
 
     console.log(this.event);
-    this.spinnerService.show();
-    this.eventService.editEvent(this.event).subscribe(
-      (data: any) => {
-        this.spinnerService.hide();
-        this.router.navigate(['/myEvents']);
+    this.eventService.isOverlapping(this.event, this.selectedDate).then(
+      (isOverlap) => {
+        if (isOverlap) {
+          this.errormsg =
+            'The event conflicts with another event. Please choose a time slot that is free.';
+        } else {
+          // this.spinnerService.show();
+          this.eventService.editEvent(this.event, this.selectedDate).subscribe(
+            (data: any) => {
+              // this.spinnerService.hide();
+              this.router.navigate(['/myEvents'], { replaceUrl: true });
+            },
+            (err) => {
+              console.log('Error in editing event', err);
+              // this.spinnerService.hide();
+            }
+          );
+        }
       },
       (err) => {
-        console.log('Error in editing event', err);
-        this.spinnerService.hide();
+        console.log(err);
       }
     );
   }
