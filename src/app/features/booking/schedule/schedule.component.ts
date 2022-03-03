@@ -271,8 +271,16 @@ export class ScheduleComponent implements OnInit, AfterViewInit {
     });
   }
 
+  navigateToHelpRoomEvents() {
+    this.router.navigateByUrl('/helproom');
+  }
+
   navigateToMyEvents() {
     this.router.navigateByUrl('/myEvents', { state: { selectedRoomId: this.selectedRoomId}});
+  }
+
+  navigateToHelpPage() {
+    this.router.navigateByUrl('/help');
   }
 
   navigateToAdmin() {
