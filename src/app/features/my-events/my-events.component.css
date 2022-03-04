@@ -92,3 +92,24 @@ h5 {
 .fa-trash-can {
   color: red;
 }
+
+.room-info {
+  margin-left: 22px;
+}
+
+.event-info {
+  margin-left: 0px;
+}
+
+.time-info {
+  margin-left: 22px;
+}
+
+.content-header {
+  display: flex;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+.add-event-title {
+  margin-left: auto;
+}

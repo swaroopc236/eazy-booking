@@ -62,7 +62,9 @@
           />
         </div>
         <button class="btn btn-black">Update Details</button>
-        <button type="cancel" class="btn btn-secondary">Cancel</button>
+        <button type="button" (click)="onCancel()" class="btn btn-secondary">
+          Cancel
+        </button>
         <br />
         <span>Already user?<a routerLink="/login">LogIn</a></span>
       </form>

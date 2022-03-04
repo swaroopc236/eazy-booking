@@ -1,6 +1,10 @@
 <div class="sidenav">
   <div class="login-main-text">
-    <div class="logo"><a class="navbar-brand text-white" routerLink="/schedule"><h1><i class="fa-solid fa-calendar-check"></i>Eazy-Booking</h1></a></div>
+    <div class="logo">
+      <a class="navbar-brand text-white" routerLink="/schedule"
+        ><h1><i class="fa-solid fa-calendar-check"></i>Eazy-Booking</h1></a
+      >
+    </div>
     <div class="content-info">
       <h3>Login Page</h3>
       <p>Login or register from here to access<br />Conference room.</p>
@@ -36,16 +40,26 @@
           <small *ngIf="errormsg !== undefined">{{ errormsg }}</small>
         </div>
         <div class="buttons">
-          <div class="form-button submit-button"><button class="btn btn-black">Login</button></div>
-          <div class="form-button cancel-button"><button class="btn btn-secondary" (click)="navigateToSignin()">Register</button></div>
-        </div>
-      </form>
-        <div>
-          <hr/>
-          <div class="sss">New to our Platform ? <a routerLink="/signin">Sign-In</a>
+          <div class="form-button submit-button">
+            <button class="btn btn-black">Login</button>
+          </div>
+          <div class="form-button cancel-button">
+            <button
+              class="btn btn-secondary"
+              type="button"
+              (click)="onCancel()"
+            >
+              Cancel
+            </button>
           </div>
         </div>
-      
+      </form>
+      <div>
+        <hr />
+        <div class="sss">
+          New to our Platform ? <a routerLink="/signin">Sign-In</a>
+        </div>
+      </div>
     </div>
   </div>
   <!-- <ngx-spinner

@@ -107,3 +107,12 @@ h5 {
 .fa-trash-can {
   color: red;
 }
+
+.content-header {
+  display: flex;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+.add-room {
+  margin-left: auto;
+}

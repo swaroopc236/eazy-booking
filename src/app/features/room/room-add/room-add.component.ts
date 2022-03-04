@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 // import { NgxSpinnerService } from 'ngx-spinner';
 import { RoomService } from '../services/room.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-room-add',
@@ -20,7 +21,8 @@ export class RoomAddComponent implements OnInit {
     private roomService: RoomService,
     private fb: FormBuilder,
     // private spinnerService: NgxSpinnerService,
-    private router: Router
+    private router: Router,
+    private location: Location
   ) {
     this.roomForm = this.fb.group({
       roomName: ['', [Validators.required]],
@@ -47,5 +49,9 @@ export class RoomAddComponent implements OnInit {
   }
   onFocus() {
     this.errormsg = undefined;
+  }
+
+  onCancel() {
+    this.location.back();
   }
 }

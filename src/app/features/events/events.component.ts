@@ -78,6 +78,10 @@ export class EventsComponent implements OnInit {
     this.event.roomId = this.roomId;
 
     console.log(this.event);
+    if (this.event.eventDetails.end < this.event.eventDetails.start) {
+      this.errormsg = 'End time must be greater than start time';
+      return;
+    }
 
     this.eventService.isOverlapping(this.event, this.selectedDate).then(
       (isOverlap) => {

@@ -26,10 +26,21 @@
               <small *ngIf="errormsg !== undefined">{{ errormsg }}</small>
             </div>
           </div>
-          <button type="submit" class="btn btn-black" (click)="addRoom()">
+          <button
+            type="button"
+            (click)="onCancel()"
+            class="pull-right btn btn-secondary"
+          >
+            Cancel
+          </button>
+          <button
+            type="submit"
+            class="pull-right btn btn-black"
+            (click)="addRoom()"
+          >
             Create Room
           </button>
-          <button type="submit" class="btn btn-secondary">Cancel</button>
+
           <br />
         </form>
       </div>

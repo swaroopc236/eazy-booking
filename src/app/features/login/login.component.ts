@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 // import { NgxSpinnerService } from 'ngx-spinner';
 import { AuthService } from '../services/auth.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-login',
@@ -26,7 +27,8 @@ export class LoginComponent implements OnInit {
     private cookieService: CookieService,
     // private spinnerService: NgxSpinnerService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private location: Location
   ) {
     this.loginForm = this.fb.group({
       emailId: ['', [Validators.required, Validators.email]],
@@ -73,7 +75,12 @@ export class LoginComponent implements OnInit {
     this.router.navigateByUrl('/signin');
     this.errormsg = undefined;
   }
+
   onFocus() {
     this.errormsg = undefined;
+  }
+
+  onCancel() {
+    this.location.back();
   }
 }
