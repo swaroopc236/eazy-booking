@@ -67,7 +67,25 @@ body {
   font-weight: 300;
 }
 
+.sss {
+  text-align: center;
+}
+
 .btn-black {
   background-color: #000 !important;
   color: #fff;
+}
+
+.buttons {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.btn {
+  margin: 5px;
+}
+
+.btn-secondary {
+  margin-right: 0;
 }

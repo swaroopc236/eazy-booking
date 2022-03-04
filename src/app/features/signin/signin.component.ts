@@ -7,8 +7,7 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
-// import { NgxSpinnerService } from 'ngx-spinner';
-import { Observable } from 'rxjs';
+import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { AuthService } from '../services/auth.service';
 import { ConfirmedValidator } from './confirmed.validators';
 
@@ -31,7 +30,7 @@ export class SigninComponent implements OnInit {
     private fb: FormBuilder,
     private authService: AuthService,
     private cookieService: CookieService,
-    // private spinnerService: NgxSpinnerService,
+    private loader: NgxUiLoaderService,
     private router: Router
   ) {
     this.signupForm = this.fb.group(
@@ -74,30 +73,29 @@ export class SigninComponent implements OnInit {
   signupUser() {
     let confirmPassword = this.signupForm.value['confirmPassword'];
     this.userDetails.password = this.signupForm.value['password'];
-    if (this.comparePasswords(this.userDetails.password, confirmPassword)) {
+
+    if(this.signupForm.status !== 'INVALID') {
       this.userDetails.userName = this.signupForm.value['userName'];
       this.userDetails.emailId = this.signupForm.value['emailId'];
-      // this.spinnerService.show();
+
+      this.loader.start();
       this.authService.signupUser(this.userDetails).subscribe(
         (data: any) => {
           this.cookieService.set('user', JSON.stringify(data.data[0]), {
             expires: 3,
           });
-          // this.spinnerService.hide();
+          this.loader.stop();
           this.router.navigate(['login']);
         },
-
         (err: any) => {
           this.errormsg = err.error.msg;
           console.log('Error while registering', this.errormsg);
-          // this.spinnerService.hide();
+          this.loader.stop();
         }
       );
-    } else {
-      console.log('mismatch');
     }
   }
-  //cheackEmail(control : FormControl): Promise<any> | Observable<any> {
+
   onFocus() {
     this.errormsg = undefined;
   }

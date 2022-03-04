@@ -1,9 +1,6 @@
 import { Injectable } from '@angular/core';
-import { io, Socket } from 'socket.io-client';
-import { webSocket, WebSocketSubject } from 'rxjs/webSocket';
-import { catchError, tap, switchAll } from 'rxjs/operators';
-import { EMPTY } from 'rxjs';
-import { Observable, Subject } from 'rxjs';
+import { io } from 'socket.io-client';
+import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable({
@@ -13,9 +10,7 @@ export class EventService {
   currentRoom: any;
   WS_ENDPOINT_REMOTE = 'https://eazy-booking-staging.herokuapp.com';
 
-  WS_ENDPOINT_LOCAL = 'http://localhost:5000';
   EVENTS_URL: string = 'https://eazy-booking-staging.herokuapp.com/events';
-  TODAY_STR = new Date().toISOString();
 
   public socket: any;
   constructor(private http: HttpClient) {
@@ -50,14 +45,6 @@ export class EventService {
   editEvent(event: any, date: string) {
     event.eventDetails.start = `${date}T${event.eventDetails.start}`;
     event.eventDetails.end = `${date}T${event.eventDetails.end}`;
-    // event.eventDetails.start = this.TODAY_STR.replace(
-    //   /T.*$/,
-    //   `T${event.eventDetails.start}`
-    // );
-    // event.eventDetails.end = this.TODAY_STR.replace(
-    //   /T.*$/,
-    //   `T${event.eventDetails.end}`
-    // );
     return this.http.put(`${this.EVENTS_URL}/${event.eventId}`, event, {
       withCredentials: true,
     });
@@ -72,7 +59,6 @@ export class EventService {
   onLatestEvents() {
     return new Observable((observer) => {
       this.socket.on('LATEST_EVENTS', (data: any) => {
-        console.log(data);
         observer.next(data);
       });
     });
@@ -81,7 +67,6 @@ export class EventService {
   onLatestRooms() {
     return new Observable((observer) => {
       this.socket.on('LATEST_ROOMS', (data: any) => {
-        console.log(data);
         observer.next(data);
       });
     });

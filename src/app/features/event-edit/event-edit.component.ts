@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
-// import { NgxSpinnerService } from 'ngx-spinner';
 import { EventService } from '../booking/services/event.service';
 import { AuthService } from '../services/auth.service';
 import { Location } from '@angular/common';
+import { NgxUiLoaderService } from 'ngx-ui-loader';
 
 @Component({
   selector: 'app-event-edit',
@@ -34,7 +34,7 @@ export class EventEditComponent implements OnInit {
     private eventService: EventService,
     private authService: AuthService,
     private cookieService: CookieService,
-    // private spinnerService: NgxSpinnerService,
+    private loader: NgxUiLoaderService,
     private router: Router,
     private route: ActivatedRoute,
     private location: Location
@@ -43,14 +43,13 @@ export class EventEditComponent implements OnInit {
     this.event.eventId = this.eventData.eventData.eventId;
     this.event.userId = this.eventData.eventData.userId;
     this.event.roomId = this.eventData.eventData.roomId;
-    // console.log(this.eventData);
-    // console.log(this.event.userId);
+    
     this.event.eventDetails.title = this.eventData.eventData.eventDetails.title;
     this.event.eventDetails.start = this.eventData.eventData.eventDetails.start;
     this.event.eventDetails.end = this.eventData.eventData.eventDetails.end;
 
     this.selectedDate = this.event.eventDetails.start.split('T')[0];
-    console.log(this.selectedDate);
+  
     var timeStart = this.event.eventDetails.start.split('T')[1];
     var timeEnd = this.event.eventDetails.end.split('T')[1];
 
@@ -81,8 +80,6 @@ export class EventEditComponent implements OnInit {
     this.event.eventDetails.start = this.eventForm.value['eventStart'] + ':00';
     this.event.eventDetails.end = this.eventForm.value['eventEnd'] + ':00';
 
-    console.log(this.event);
-
     if (this.event.eventDetails.end < this.event.eventDetails.start) {
       this.errormsg = 'End time must be greater than start time';
       return;
@@ -93,15 +90,15 @@ export class EventEditComponent implements OnInit {
           this.errormsg =
             'The event conflicts with another event. Please choose a time slot that is free.';
         } else {
-          // this.spinnerService.show();
+          this.loader.start();
           this.eventService.editEvent(this.event, this.selectedDate).subscribe(
             (data: any) => {
-              // this.spinnerService.hide();
+              this.loader.stop();
               this.router.navigate(['/myEvents'], { replaceUrl: true });
             },
             (err) => {
               console.log('Error in editing event', err);
-              // this.spinnerService.hide();
+              this.loader.stop();
             }
           );
         }

@@ -1,24 +1,15 @@
-import { AfterViewInit, Component, OnInit, Renderer2, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import {
   CalendarOptions,
-  Calendar,
-  SlotLabelMountArg,
-  SlotLaneMountArg,
-  ViewMountArg,
   FullCalendarComponent,
 } from '@fullcalendar/angular';
 import { CookieService } from 'ngx-cookie-service';
 import { Observable } from 'rxjs';
 import { AuthService } from '../../services/auth.service';
-import { BookingService } from '../services/booking.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { EventsComponent } from '../../events/events.component';
 import { RoomService } from '../../room/services/room.service';
 import { EventService } from '../services/event.service';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
-// import { URLSearchParams } from 'url';
-// import { NgxSpinner, NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-schedule',
@@ -46,7 +37,6 @@ export class ScheduleComponent implements OnInit, AfterViewInit {
   urlParams = new URLSearchParams(window.location.search);
 
   timeSelect = (selectInfo: any) => {
-    // console.log(selectInfo.startStr, selectInfo.endStr);
     const startDate = selectInfo.startStr.substring(8, 10);
     const endDate = selectInfo.endStr.substring(8, 10);
     if (startDate !== endDate) {
@@ -62,9 +52,6 @@ export class ScheduleComponent implements OnInit, AfterViewInit {
       .split('T')[1]
       .substring(0, 5);
     this.navigateToEvents();
-    // selectInfo.jsEvent.target.style.backgroundColor = 'green';
-    // selectInfo.jsEvent.target.style.color = 'red';
-    // console.log(selectInfo.jsEvent.target.style.backgroundColor);
   };
 
   eventSelect = (eventInfo: any) => {
@@ -76,32 +63,7 @@ export class ScheduleComponent implements OnInit, AfterViewInit {
     this.urlParams.set('selectedDate', this.currentSelectedDate);
     let newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?' + this.urlParams.toString();
     window.history.replaceState({path: newurl}, '', newurl);
-    // console.log(this.currentSelectedDate);
   };
-
-  canSelect() {
-    return true;
-  }
-
-  viewManipulation(view: ViewMountArg) {
-    // this.currentView = view;
-    // console.log("view mani");
-  }
-
-  cellManipulation(cell: SlotLaneMountArg) {
-    // console.log(cell.view);
-    const currentDateTime = Date.now() - 900000;
-    const todayDateTime = new Date(new Date().toDateString()).getTime();
-    const slotDateTime = cell.time!.milliseconds;
-
-    // console.log("cell mani");
-
-    if (currentDateTime > todayDateTime + slotDateTime) {
-      cell.el.style.backgroundColor = 'darkgrey';
-    }
-    // console.log(new Date(new Date().toDateString()).getTime());
-    // console.log(cell.time?.milliseconds);
-  }
 
   calendarOptions: CalendarOptions = {
     allDaySlot: false,
@@ -115,7 +77,7 @@ export class ScheduleComponent implements OnInit, AfterViewInit {
       right: 'dayGridMonth,timeGridWeek,timeGridDay',
     },
     initialView: 'timeGridDay',
-    selectable: this.canSelect(),
+    selectable: true,
     selectConstraint: {
       start: Date.now() - 900000,
     },
@@ -123,8 +85,6 @@ export class ScheduleComponent implements OnInit, AfterViewInit {
     select: this.timeSelect,
     eventClick: this.eventSelect,
     datesSet: this.dateSelect,
-    // slotLaneDidMount: this.cellManipulation,
-    // viewDidMount: this.viewManipulation,
   };
 
   @ViewChild('calendar') calendarComponent!: FullCalendarComponent;
@@ -133,8 +93,6 @@ export class ScheduleComponent implements OnInit, AfterViewInit {
   rooms$: Observable<any>;
 
   constructor(
-    private fb: FormBuilder,
-    private bookingService: BookingService,
     private authService: AuthService,
     private roomService: RoomService,
     private eventService: EventService,
@@ -163,12 +121,9 @@ export class ScheduleComponent implements OnInit, AfterViewInit {
   printEvents() {
     this.events$.subscribe((data) => {
       this.events = data.data;
-      console.log(this.events);
-      console.log('Selected room', this.selectedRoomId);
       this.roomEvents = this.events.filter(
         (event: any) => event.roomId == this.selectedRoomId
       );
-      console.log(this.roomEvents);
       this.getEventDetailsFromEvent();
     });
   }
@@ -180,22 +135,13 @@ export class ScheduleComponent implements OnInit, AfterViewInit {
         this.roomEventsDetail.push(e.eventDetails);
       }
     });
-    // console.log(this.roomEventsDetail);
     this.calendarOptions.events = this.roomEventsDetail;
-    // this.calendarApi.render();
   }
 
   ngOnInit(): void {
-
-    // this.spinnerService.show();
-
     this.loader.start();
-    setTimeout(() => {
-      this.loader.stop()
-    }, 5000);
     this.roomService.getRooms().subscribe(
       (data: any) => {
-        // console.log(data.data);
         this.rooms = data.data;
         this.selectedRoomId =
           this.route.snapshot.queryParams['selectedRoomId'] ||
@@ -208,17 +154,6 @@ export class ScheduleComponent implements OnInit, AfterViewInit {
           this.currentSelectedDate;
 
         this.calendarApi.gotoDate(this.currentSelectedDate);
-
-        // this.eventService.socket.on('LATEST_EVENTS', (data: any) => {
-        //   // console.log(data);
-        //   this.events = data.data;
-        //   // console.log(this.events);
-        //   this.roomEvents = this.events.filter(
-        //     (event: any) => event.roomId === this.selectedRoomId
-        //   );
-        //   // console.log(this.roomEvents);
-        //   this.getEventDetailsFromEvent();
-        // })
 
         this.eventService.getEvents().subscribe(
           (data: any) => {
@@ -233,12 +168,10 @@ export class ScheduleComponent implements OnInit, AfterViewInit {
             console.log('Error in getting events', err);
           }
         );
-        // this.spinnerService.hide();
         this.loader.stop()
       },
       (err) => {
         console.log('Error in getting rooms', err);
-        // this.spinnerService.hide();
         this.loader.stop()
       }
     );
@@ -294,7 +227,7 @@ export class ScheduleComponent implements OnInit, AfterViewInit {
   }
 
   navigateToMyEvents() {
-    this.router.navigateByUrl('/myEvents', { state: { selectedRoomId: this.selectedRoomId}});
+    this.router.navigateByUrl('/myEvents');
   }
 
   navigateToHelpPage() {

@@ -7,7 +7,6 @@ import { FullCalendarModule } from '@fullcalendar/angular';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import timeGridPlugin from '@fullcalendar/timegrid';
-import { CreateBookingComponent } from './features/booking/create-booking/create-booking.component';
 import { ScheduleComponent } from './features/booking/schedule/schedule.component';
 import { LoginComponent } from './features/login/login.component';
 import { SigninComponent } from './features/signin/signin.component';
@@ -19,13 +18,11 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AdminPageComponent } from './features/admin-page/admin-page.component';
 import { MyEventsComponent } from './features/my-events/my-events.component';
 import { EventEditComponent } from './features/event-edit/event-edit.component';
-// import { NgxSpinnerModule } from 'ngx-spinner';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { UserEditComponent } from './features/user-edit/user-edit.component';
 import { HelpComponent } from './features/help/help.component';
 import { HelproomComponent } from './features/helproom/helproom.component';
 import { NgxUiLoaderConfig, NgxUiLoaderModule, SPINNER } from 'ngx-ui-loader';
-//import { EventComponent } from './features/events/services/event/event.component';
 
 // register FullCalendar plugins
 FullCalendarModule.registerPlugins([
@@ -42,7 +39,6 @@ const loaderConfig: NgxUiLoaderConfig = {
 @NgModule({
   declarations: [
     AppComponent,
-    CreateBookingComponent,
     ScheduleComponent,
     LoginComponent,
     SigninComponent,

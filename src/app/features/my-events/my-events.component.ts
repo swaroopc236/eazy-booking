@@ -2,6 +2,7 @@ import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { EventService } from './../booking/services/event.service';
 import { Component, OnInit } from '@angular/core';
+import { NgxUiLoaderService } from 'ngx-ui-loader';
 // import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
@@ -16,7 +17,7 @@ export class MyEventsComponent implements OnInit {
   constructor(
     private eventService: EventService,
     private cookieService: CookieService,
-    // private spinnerService: NgxSpinnerService,
+    private loader: NgxUiLoaderService,
     private router: Router
   ) {
     this.userId = JSON.parse(this.cookieService.get('user')).userId;
@@ -27,16 +28,14 @@ export class MyEventsComponent implements OnInit {
   }
 
   getMyEvents() {
-    // this.spinnerService.show();
+    this.loader.start();
     this.eventService.getEvents().subscribe(
       (data: any) => {
-        // console.log(data.data);
         this.allEvents = data.data;
         this.myEvents = this.allEvents.filter(
           (event: any) => event.userId == this.userId
         );
-        // console.log(this.myEvents);
-        // this.spinnerService.hide();
+        this.loader.stop();
       },
       (err) => {
         console.log('Error in getting events', err);

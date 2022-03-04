@@ -8,7 +8,6 @@ import { CookieService } from 'ngx-cookie-service';
 })
 export class AuthService implements CanActivate {
   private USERS_URL = 'https://eazy-booking-staging.herokuapp.com/users';
-  // private USERS_URL = 'http://localhost:5000/users';
 
   currentUser: any;
 
@@ -29,14 +28,12 @@ export class AuthService implements CanActivate {
   }
 
   signupUser(userDetails: any) {
-    console.log(userDetails);
     return this.http.post(`${this.USERS_URL}/signup`, userDetails, {
       withCredentials: true,
     });
   }
 
   updateUser(userId: string, userDetails: any) {
-    console.log(userId, userDetails);
     return this.http.put(`${this.USERS_URL}/${userId}`, userDetails, {
       withCredentials: true,
     });
@@ -46,7 +43,6 @@ export class AuthService implements CanActivate {
     const user_cookie = this.cookieService.get('user');
     if (user_cookie) {
       const user = JSON.parse(this.cookieService.get('user'));
-      // console.log(user);
       if (user) {
         return true;
       }

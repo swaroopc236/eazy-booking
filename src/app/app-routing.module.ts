@@ -12,7 +12,6 @@ import { RoleGuard } from './features/services/role.guard';
 import { AuthService } from './features/services/auth.service';
 import { MyEventsComponent } from './features/my-events/my-events.component';
 import { EventEditComponent } from './features/event-edit/event-edit.component';
-import { NoAuthGuard } from './features/services/no-auth.guard';
 import { UserEditComponent } from './features/user-edit/user-edit.component';
 import { HelpComponent } from './features/help/help.component';
 import { HelproomComponent } from './features/helproom/helproom.component';

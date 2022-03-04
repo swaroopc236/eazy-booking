@@ -83,15 +83,6 @@ export class UserEditComponent implements OnInit {
             expires: 3,
           });
           this.router.navigate(['/schedule']);
-          // this.authService.logoutUser().subscribe(
-          //   (data) => {
-          //     console.log(data);
-          //     this.cookieService.delete('user');
-          //   },
-          //   (err) => {
-          //     console.log('Error while logging out', err);
-          //   }
-          // );
         },
         (err: any) => {
           this.errormsg = err.error.msg;

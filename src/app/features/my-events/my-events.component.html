@@ -1,4 +1,5 @@
 <div class="sidenav">
+  <ngx-ui-loader></ngx-ui-loader>
   <div class="login-main-text">
     <h2>
       Eazy-Booking<br />
@@ -34,7 +35,6 @@
               &nbsp; &nbsp; {{ getReadableTime(event.eventDetails.start) }} -
               {{ getReadableTime(event.eventDetails.end) }}
             </small>
-            <!-- <small>{{event.eventDetails.start.split('T')[0]}} {{event.eventDetails.start.split('T')[1]}} - {{event.eventDetails.end.split('T')[1]}}</small> -->
             <span class="pull-right">
               <i
                 class="fa-solid fa-pen-to-square fa-lg"
@@ -50,12 +50,4 @@
       </ul>
     </div>
   </div>
-  <!-- <ngx-spinner
-    bdColor="rgba(0, 0, 0, 0.8)"
-    size="medium"
-    color="#fff"
-    type="ball-pulse"
-    [fullScreen]="true"
-    ><p style="color: white">Loading...</p></ngx-spinner
-  > -->
 </div>

@@ -89,7 +89,7 @@
 
   <div class="calendar-container">
     <div>
-      <p>Select the room</p>
+      <h6>Select the room</h6>
       <select name="rooms" id="rooms" (change)="onChange($event)">
         <option
           *ngFor="let room of rooms"
@@ -109,12 +109,4 @@
       ></full-calendar>
     </div>
   </div>
-  <!-- <ngx-spinner
-    bdColor="rgba(0, 0, 0, 0.8)"
-    size="medium"
-    color="#fff"
-    type="ball-pulse"
-    [fullScreen]="true"
-    ><p style="color: white">Loading...</p></ngx-spinner
-  > -->
 </div>
