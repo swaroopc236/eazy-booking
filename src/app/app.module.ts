@@ -24,6 +24,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { UserEditComponent } from './features/user-edit/user-edit.component';
 import { HelpComponent } from './features/help/help.component';
 import { HelproomComponent } from './features/helproom/helproom.component';
+import { NgxUiLoaderConfig, NgxUiLoaderModule, SPINNER } from 'ngx-ui-loader';
 //import { EventComponent } from './features/events/services/event/event.component';
 
 // register FullCalendar plugins
@@ -32,6 +33,11 @@ FullCalendarModule.registerPlugins([
   interactionPlugin,
   timeGridPlugin,
 ]);
+
+const loaderConfig: NgxUiLoaderConfig = {
+  fgsType: SPINNER.threeBounce,
+  gap: 40
+}
 
 @NgModule({
   declarations: [
@@ -57,7 +63,7 @@ FullCalendarModule.registerPlugins([
     ReactiveFormsModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    // NgxSpinnerModule,
+    NgxUiLoaderModule.forRoot(loaderConfig),
     NgbModule,
   ],
   providers: [],

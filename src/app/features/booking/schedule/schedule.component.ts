@@ -16,6 +16,7 @@ import { EventsComponent } from '../../events/events.component';
 import { RoomService } from '../../room/services/room.service';
 import { EventService } from '../services/event.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { NgxUiLoaderService } from 'ngx-ui-loader';
 // import { URLSearchParams } from 'url';
 // import { NgxSpinner, NgxSpinnerService } from 'ngx-spinner';
 
@@ -138,7 +139,7 @@ export class ScheduleComponent implements OnInit, AfterViewInit {
     private roomService: RoomService,
     private eventService: EventService,
     private cookieService: CookieService,
-    // private spinnerService: NgxSpinnerService,
+    private loader: NgxUiLoaderService,
     private router: Router,
     private route: ActivatedRoute
   ) {
@@ -187,6 +188,11 @@ export class ScheduleComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
 
     // this.spinnerService.show();
+
+    this.loader.start();
+    setTimeout(() => {
+      this.loader.stop()
+    }, 5000);
     this.roomService.getRooms().subscribe(
       (data: any) => {
         // console.log(data.data);
@@ -228,10 +234,12 @@ export class ScheduleComponent implements OnInit, AfterViewInit {
           }
         );
         // this.spinnerService.hide();
+        this.loader.stop()
       },
       (err) => {
         console.log('Error in getting rooms', err);
         // this.spinnerService.hide();
+        this.loader.stop()
       }
     );
   }
