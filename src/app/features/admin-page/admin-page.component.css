@@ -49,7 +49,7 @@ body {
   }
 
   .login-form {
-    margin-top: 70%;
+    margin-top: 10%;
     padding: auto;
   }
 
@@ -59,13 +59,28 @@ body {
 }
 
 .login-main-text {
-  margin-top: 20%;
-  padding: 60px;
   color: #fff;
 }
 
 .login-main-text h2 {
   font-weight: 300;
+}
+
+.logo {
+  margin: 20px;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.logo h1:hover {
+  cursor: pointer;
+}
+
+.content-info {
+  margin: 70%;
+  margin-left: 10%;
+  color: white;
 }
 
 .btn-black {
@@ -74,4 +89,21 @@ body {
 }
 .sss {
   margin-top: 20%;
+}
+
+h5 {
+  display: inline;
+}
+
+.fa-calendar-plus {
+  margin-left: 0px;
+  margin-right: 5px;
+}
+
+.fa-pen-to-square {
+  color: blue;
+}
+
+.fa-trash-can {
+  color: red;
 }

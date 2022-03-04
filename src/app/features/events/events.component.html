@@ -1,10 +1,10 @@
 <div class="sidenav">
   <div class="login-main-text">
-    <h2>
-      Eazy-Booking<br />
+    <div class="logo"><a class="navbar-brand text-white" routerLink="/schedule"><h1><i class="fa-solid fa-calendar-check"></i>Eazy-Booking</h1></a></div>
+    <div class="content-info">
       <h3>Slot Booking Section</h3>
-    </h2>
-    <p>Here you can book your <br />Conference room's timing.</p>
+      <p>Here you can book your Conference room's timing.</p>
+    </div>
   </div>
 </div>
 <div class="main">
@@ -46,7 +46,6 @@
             formControlName="eventEnd"
             (focus)="errormsg = undefined"
           />
-          <small>Office hours are 9am to 6pm</small>
         </div>
         <div *ngIf="errormsg !== undefined" class="alert alert-danger">
           <small>{{ errormsg }}</small>
@@ -59,10 +58,10 @@
     </div>
     <div>
       <hr/>
-      <span class="sss"
+      <div class="sss"
         >Do you want to see schedule ?
         <a routerLink="/schedule">schedule</a>
-      </span>
+      </div>
     </div>
   </div>
   <!-- <ngx-spinner

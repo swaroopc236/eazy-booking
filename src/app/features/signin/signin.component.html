@@ -1,10 +1,10 @@
 <div class="sidenav">
   <div class="login-main-text">
-    <h2>
-      Eazy-Booking<br />
-      Signin Page
-    </h2>
-    <p>Signin here to access<br />Conference room.</p>
+    <div class="logo"><a class="navbar-brand text-white" routerLink="/schedule"><h1><i class="fa-solid fa-calendar-check"></i>Eazy-Booking</h1></a></div>
+    <div class="content-info">
+      <h3>Signup Page</h3>
+      <p>Register here to access<br />Conference room.</p>
+    </div>
   </div>
 </div>
 <div class="main">
@@ -62,10 +62,7 @@
             formControlName="confirmPassword"
             required
           />
-          <div
-            *ngIf="f.confirmPassword.touched && f.confirmPassword.invalid"
-            class="alert alert-danger"
-          >
+          <div *ngIf="f.confirmPassword.touched && f.confirmPassword.invalid" class="alert alert-danger">
             <small *ngIf="f.confirmPassword.errors?.required"
               >Password is required.</small
             >
@@ -74,19 +71,24 @@
             >
           </div>
         </div>
-        <button class="btn btn-black">Sign In</button>
-        <button type="cancel" class="btn btn-secondary">Cancel</button>
-        <br />
-        <span>Already user?<a routerLink="/login">LogIn</a></span>
+        <div class="buttons">
+          <div class="form-button submit-button"><button class="btn btn-black">Register</button></div>
+          <div class="form-button cancel-button"><button class="btn btn-secondary" routerLink="/schedule" >Cancel</button></div>
+        </div>
       </form>
+      <div>
+        <hr/>
+        <div class="sss">Already user?<a routerLink="/login">LogIn</a>
+        </div>
+      </div>
     </div>
   </div>
-  <!-- <ngx-spinner
-    bdColor="rgba(0, 0, 0, 0.8)"
-    size="medium"
-    color="#fff"
-    type="ball-pulse"
-    [fullScreen]="true"
-    ><p style="color: white">Loading...</p></ngx-spinner
-  > -->
 </div>
+<!-- <ngx-spinner
+  bdColor="rgba(0, 0, 0, 0.8)"
+  size="medium"
+  color="#fff"
+  type="ball-pulse"
+  [fullScreen]="true"
+  ><p style="color: white">Loading...</p></ngx-spinner
+> -->

@@ -59,13 +59,32 @@ body {
 }
 
 .login-main-text{
-    margin-top: 20%;
-    padding: 60px;
+    /* margin-top: 20%; */
+    /* padding: 60px; */
     color: rgb(255, 255, 255);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .login-main-text h2{
-    font-weight: 300;
+    font-weight: 500;
+}
+
+.logo {
+    margin: 20px;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.logo h1:hover {
+    cursor: pointer;
+}
+
+.content-info {
+    margin: 40%;
+    margin-left: 20%;
 }
 
 .btn-black{
@@ -73,7 +92,8 @@ body {
     color: #fff;
 }
 .sss{
-    margin-top: 20%;
+    /* margin-top: 20%; */
+    text-align: center;
 }
 
 .buttons {

@@ -1,20 +1,29 @@
 <div class="sidenav">
-  <div class="login-main-text">
-    <h2>
-      Eazy-Booking<br />
-      Admin Page
-    </h2>
-    <p>Admin Dashboard</p>
+  <div class="logo"><a class="navbar-brand text-white" routerLink="/schedule"><h1><i class="fa-solid fa-calendar-check"></i>Eazy-Booking</h1></a>
+    <div class="content-info">
+      <h3>Admin Page</h3>
+      <p>Admin dashboard</p>
+    </div>
   </div>
 </div>
 <div class="main">
   <div class="col-md-6 col-sm-12">
-    <div class="login-form">
-      <h3>Room Details</h3>
-      <ol class="list-group list-group-numbered">
+    <div class="container">
+      <div>
+        <h3>All Rooms</h3>
+        <span class="pull-right btn btn-black" routerLink="/room-add">
+          <i class="fa-solid fa-calendar-plus fa-lg"></i>Add Room
+        </span>
+      </div>
+      <ul class="list-group list-group-numbered">
         <li *ngFor="let room of rooms" class="list-group-item">
-          <b>{{ room.roomName }}</b>
+          <div class="w-100 justify-content-between"></div>
+          <div><i class="fa-solid fa-calendar"></i><h5>{{ room.roomName }}</h5></div>
           <span class="pull-right">
+            <i class="fa-solid fa-pen-to-square fa-lg" (click)="editRoom(room)"></i>
+            <i class="fa-solid fa-trash-can fa-lg" (click)="deleteRoom(room)"></i>
+          </span>
+          <!-- <span class="pull-right">
             <button
               type="button"
               class="btn btn-danger"
@@ -29,9 +38,9 @@
             >
               Edit
             </button>
-          </span>
+          </span> -->
         </li>
-      </ol>
+      </ul>
       <!-- <ngx-spinner
         bdColor="rgba(0, 0, 0, 0.8)"
         size="medium"
@@ -40,11 +49,11 @@
         [fullScreen]="true"
         ><p style="color: white">Loading...</p></ngx-spinner
       > -->
-      <span class="pull-right">
+      <!-- <span class="pull-right">
         <button type="submit" class="btn btn-black" routerLink="/room-add">
           Add Room
         </button></span
-      >
+      > -->
     </div>
   </div>
 </div>

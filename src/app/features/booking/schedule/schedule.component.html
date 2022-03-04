@@ -53,31 +53,32 @@
             >
           </div>
         </div>
-      </div>
-      <div class="btn-group">
-        <button
-          type="button"
-          class="btn btn-black dropdown-toggle"
-          data-toggle="dropdown"
-          aria-haspopup="true"
-          aria-expanded="false"
-        >
-          HELP!
-        </button>
-        <div class="dropdown-menu">
-          <a
-            class="dropdown-item"
-            type="submit"
-            (click)="navigateToHelpPage()"
-            >Booking Events?</a
+        <div class="btn-group">
+          <button
+            type="button"
+            class="btn btn-black dropdown-toggle"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
           >
-          <a
+          <i class="fa-solid fa-info"></i>
+            HELP!
+          </button>
+          <div class="dropdown-menu">
+            <a
               class="dropdown-item"
               type="submit"
-              (click)="navigateToHelpRoomEvents()"
-              *ngIf="isAdmin"
-              >Editing Room?</a
+              (click)="navigateToHelpPage()"
+              >Booking Events?</a
             >
+            <a
+                class="dropdown-item"
+                type="submit"
+                (click)="navigateToHelpRoomEvents()"
+                *ngIf="isAdmin"
+                >Editing Room?</a
+              >
+          </div>
         </div>
       </div>
     </nav>

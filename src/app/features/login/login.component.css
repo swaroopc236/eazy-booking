@@ -49,7 +49,7 @@ body {
   }
 
   .login-form {
-    margin-top: 70%;
+    margin-top: 60%;
   }
 
   .register-form {
@@ -58,22 +58,61 @@ body {
 }
 
 .login-main-text {
-  margin-top: 20%;
-  padding: 60px;
+  /* margin-top: 20%;
+  padding: 60px; */
   color: #fff;
+  /* display: flex;
+    flex-direction: column;
+    align-items: center; */
 }
 
 .login-main-text h2 {
   font-weight: 300;
 }
 
+.login-main-text h2{
+  font-weight: 500;
+}
+
+.logo {
+  margin: 20px;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.logo h1:hover {
+  cursor: pointer;
+}
+
+.content-info {
+  margin: 40%;
+  margin-left: 20%;
+}
+
 .btn-black {
   background-color: #000 !important;
   color: #fff;
 }
-.sss {
-  margin-top: 20%;
-}
+
 input.ng-invalid.ng-touched {
   border: 1px solid red;
+}
+
+.sss {
+  text-align: center;
+}
+
+.buttons {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.btn {
+  margin: 5px;
+}
+
+.btn-secondary {
+  margin-right: 0;
 }
