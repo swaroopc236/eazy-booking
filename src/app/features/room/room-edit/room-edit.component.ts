@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 // import { NgxSpinnerService } from 'ngx-spinner';
 import { RoomService } from '../services/room.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-room-edit',
@@ -22,7 +23,8 @@ export class RoomEditComponent implements OnInit {
     private roomService: RoomService,
     private fb: FormBuilder,
     // private spinnerService: NgxSpinnerService,
-    private router: Router
+    private router: Router,
+    private location: Location
   ) {
     this.roomData = this.router.getCurrentNavigation()?.extras.state;
     this.roomDetails.roomId = this.roomData.roomData.roomId;
@@ -54,5 +56,9 @@ export class RoomEditComponent implements OnInit {
 
   onFocus() {
     this.errormsg = undefined;
+  }
+
+  onCancel() {
+    this.location.back();
   }
 }

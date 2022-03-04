@@ -9,16 +9,23 @@
   flex: 0 1 auto;
 } */
 
-.parent-spinner {
-  position: relative;
+.main-box {
+  height: 100%;
 }
 
 .calendar-container {
   /* flex: 1 1 auto; */
   padding: 5px;
-  /* height: 100%; */
+  height: 100%;
 }
 
+.calendar {
+  height: 100%;
+}
+
+.full-calendar-container {
+  height: 100%;
+}
 .view-green {
   background-color: green;
 }

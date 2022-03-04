@@ -5,6 +5,7 @@ import { CookieService } from 'ngx-cookie-service';
 // import { NgxSpinnerService } from 'ngx-spinner';
 import { EventService } from '../booking/services/event.service';
 import { AuthService } from '../services/auth.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-event-edit',
@@ -35,7 +36,8 @@ export class EventEditComponent implements OnInit {
     private cookieService: CookieService,
     // private spinnerService: NgxSpinnerService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private location: Location
   ) {
     this.eventData = this.router.getCurrentNavigation()?.extras.state;
     this.event.eventId = this.eventData.eventData.eventId;
@@ -80,6 +82,11 @@ export class EventEditComponent implements OnInit {
     this.event.eventDetails.end = this.eventForm.value['eventEnd'] + ':00';
 
     console.log(this.event);
+
+    if (this.event.eventDetails.end < this.event.eventDetails.start) {
+      this.errormsg = 'End time must be greater than start time';
+      return;
+    }
     this.eventService.isOverlapping(this.event, this.selectedDate).then(
       (isOverlap) => {
         if (isOverlap) {
@@ -103,5 +110,9 @@ export class EventEditComponent implements OnInit {
         console.log(err);
       }
     );
+  }
+
+  onCancel() {
+    this.location.back();
   }
 }

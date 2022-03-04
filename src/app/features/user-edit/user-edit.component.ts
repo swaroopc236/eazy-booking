@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { AuthService } from '../services/auth.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-user-edit',
@@ -25,7 +26,8 @@ export class UserEditComponent implements OnInit {
     private fb: FormBuilder,
     private authService: AuthService,
     private cookieService: CookieService,
-    private router: Router
+    private router: Router,
+    private location: Location
   ) {
     this.userData = this.router.getCurrentNavigation()?.extras.state;
     this.userDetails.userName = this.userData.userData.userName;
@@ -103,5 +105,9 @@ export class UserEditComponent implements OnInit {
 
   onFocus() {
     this.errormsg = undefined;
+  }
+
+  onCancel() {
+    this.location.back();
   }
 }

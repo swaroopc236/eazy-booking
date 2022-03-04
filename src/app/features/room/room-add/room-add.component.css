@@ -74,3 +74,11 @@ body {
 .sss {
   margin-top: 20%;
 }
+
+.btn {
+  margin: 5px;
+}
+
+.btn-secondary {
+  margin-right: 0px;
+}

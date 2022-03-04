@@ -51,8 +51,15 @@
         <div *ngIf="errormsg !== undefined" class="alert alert-danger">
           <small>{{ errormsg }}</small>
         </div>
-        <button class="btn btn-black">Submit</button>
-        <button type="submit" class="btn btn-secondary">Cancel</button>
+        <button
+          type="button"
+          (click)="onCancel()"
+          class="pull-right btn btn-secondary"
+        >
+          Cancel
+        </button>
+        <button class="pull-right btn btn-black">Submit</button>
+
         <br />
         <hr />
         <span class="sss"

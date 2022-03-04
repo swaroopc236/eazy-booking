@@ -1,6 +1,10 @@
 <div class="sidenav">
   <div class="login-main-text">
-    <div class="logo"><a class="navbar-brand text-white" routerLink="/schedule"><h1><i class="fa-solid fa-calendar-check"></i>Eazy-Booking</h1></a></div>
+    <div class="logo">
+      <a class="navbar-brand text-white" routerLink="/schedule"
+        ><h1><i class="fa-solid fa-calendar-check"></i>Eazy-Booking</h1></a
+      >
+    </div>
     <div class="content-info">
       <h3>Slot Booking Section</h3>
       <p>Here you can book your Conference room's timing.</p>
@@ -27,8 +31,6 @@
             type="time"
             id="appt"
             class="form-control"
-            min="09:00"
-            max="18:00"
             required
             formControlName="eventStart"
             (focus)="errormsg = undefined"
@@ -40,8 +42,6 @@
             type="time"
             id="appt"
             class="form-control"
-            min="09:00"
-            max="18:00"
             required
             formControlName="eventEnd"
             (focus)="errormsg = undefined"
@@ -51,15 +51,21 @@
           <small>{{ errormsg }}</small>
         </div>
         <div class="buttons">
-          <div class="form-button submit-button"><button class="btn btn-black">Submit</button></div>
-          <div class="form-button cancel-button"><button (click)="onCancel()" class="btn btn-secondary">Cancel</button></div>
+          <div class="form-button submit-button">
+            <button class="btn btn-black">Submit</button>
+          </div>
+          <div class="form-button cancel-button">
+            <button (click)="onCancel()" class="btn btn-secondary">
+              Cancel
+            </button>
+          </div>
         </div>
       </form>
     </div>
     <div>
-      <hr/>
-      <div class="sss"
-        >Do you want to see schedule ?
+      <hr />
+      <div class="sss">
+        Do you want to see schedule ?
         <a routerLink="/schedule">schedule</a>
       </div>
     </div>

@@ -25,10 +25,21 @@
             <small *ngIf="errormsg !== undefined">{{ errormsg }}</small>
           </div>
         </div>
-        <button type="submit" class="btn btn-black" (click)="editRoom()">
+        <button
+          type="button"
+          (click)="onCancel()"
+          class="pull-right btn btn-secondary"
+        >
+          Cancel
+        </button>
+        <button
+          type="submit"
+          class="pull-right btn btn-black"
+          (click)="editRoom()"
+        >
           Confirm
         </button>
-        <button type="cancel" class="btn btn-secondary">Cancel</button>
+
         <br />
       </form>
     </div>

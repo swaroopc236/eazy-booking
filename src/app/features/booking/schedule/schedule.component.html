@@ -1,8 +1,37 @@
 <div class="main-box">
   <div class="main-header">
     <nav class="navbar navbar-expand-lg bg-dark">
-      <a class="navbar-brand text-white bg-dark"><h1><i class="fa-solid fa-calendar-check"></i>Eazy Booking</h1></a>
+      <a class="navbar-brand text-white bg-dark"
+        ><h1><i class="fa-solid fa-calendar-check"></i>Eazy Booking</h1></a
+      >
       <div class="navbar-header">
+        <div class="btn-group">
+          <button
+            type="button"
+            class="btn btn-black dropdown-toggle"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+          >
+            <i class="fa-solid fa-info"></i>
+            HELP!
+          </button>
+          <div class="dropdown-menu pull-right">
+            <a
+              class="dropdown-item"
+              type="submit"
+              (click)="navigateToHelpPage()"
+              >Create Events?</a
+            >
+            <a
+              class="dropdown-item"
+              type="submit"
+              (click)="navigateToHelpRoomEvents()"
+              *ngIf="isAdmin"
+              >Editing Room?</a
+            >
+          </div>
+        </div>
         <div class="btn-group">
           <button
             type="button"
@@ -53,33 +82,6 @@
             >
           </div>
         </div>
-        <div class="btn-group">
-          <button
-            type="button"
-            class="btn btn-black dropdown-toggle"
-            data-toggle="dropdown"
-            aria-haspopup="true"
-            aria-expanded="false"
-          >
-          <i class="fa-solid fa-info"></i>
-            HELP!
-          </button>
-          <div class="dropdown-menu">
-            <a
-              class="dropdown-item"
-              type="submit"
-              (click)="navigateToHelpPage()"
-              >Booking Events?</a
-            >
-            <a
-                class="dropdown-item"
-                type="submit"
-                (click)="navigateToHelpRoomEvents()"
-                *ngIf="isAdmin"
-                >Editing Room?</a
-              >
-          </div>
-        </div>
       </div>
     </nav>
   </div>
@@ -88,13 +90,18 @@
     <div>
       <p>Select the room</p>
       <select name="rooms" id="rooms" (change)="onChange($event)">
-        <option *ngFor="let room of rooms" value="{{ room.roomId }}" [selected]="selectedRoomId == room.roomId">
+        <option
+          *ngFor="let room of rooms"
+          value="{{ room.roomId }}"
+          [selected]="selectedRoomId == room.roomId"
+        >
           {{ room.roomName }}
         </option>
       </select>
     </div>
     <div class="calendar">
       <full-calendar
+        class="full-calendar-container"
         id="calendar"
         #calendar
         [options]="calendarOptions"
