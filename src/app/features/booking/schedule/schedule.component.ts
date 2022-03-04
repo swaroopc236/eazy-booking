@@ -129,6 +129,7 @@ export class ScheduleComponent implements OnInit, AfterViewInit {
   @ViewChild('calendar') calendarComponent!: FullCalendarComponent;
 
   events$: Observable<any>;
+  rooms$: Observable<any>;
 
   constructor(
     private fb: FormBuilder,
@@ -146,6 +147,15 @@ export class ScheduleComponent implements OnInit, AfterViewInit {
 
     this.events$ = this.eventService.onLatestEvents();
     this.printEvents();
+
+    this.rooms$ = this.eventService.onLatestRooms();
+    this.printRooms();
+  }
+
+  printRooms() {
+    this.rooms$.subscribe((data) => {
+      this.rooms = data.data;
+    })
   }
 
 
