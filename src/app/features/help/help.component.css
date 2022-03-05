@@ -1,10 +1,16 @@
 h1{
      text-align: center;
      background-color: rgb(216, 149, 149);
+     font-size: 35px;
 }
 .center {
     display: block;
     margin-left: auto;
     margin-right: auto;
     width: 50%;
+  }
+
+  .method{
+       font-size:30px;
+       text-align: center;
   }
