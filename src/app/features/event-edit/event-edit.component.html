@@ -1,11 +1,15 @@
 <div class="sidenav">
   <ngx-ui-loader></ngx-ui-loader>
   <div class="login-main-text">
-    <h2>
-      Eazy-Booking<br />
+    <div class="logo">
+      <a class="navbar-brand text-white" routerLink="/schedule"
+        ><h1><i class="fa-solid fa-calendar-check"></i>Eazy-Booking</h1></a
+      >
+    </div>
+    <div class="content-info">
       <h3>Slot Booking Section</h3>
-    </h2>
-    <p>Here you can edit your <br />Conference room's timing.</p>
+      <p>Here you can edit your <br />Conference room's timing.</p>
+    </div>
   </div>
 </div>
 <div class="main">
@@ -47,27 +51,32 @@
             formControlName="eventEnd"
             (focus)="errormsg = undefined"
           />
-          <small>Office hours are 9am to 6pm</small>
         </div>
         <div *ngIf="errormsg !== undefined" class="alert alert-danger">
           <small>{{ errormsg }}</small>
         </div>
-        <button
-          type="button"
-          (click)="onCancel()"
-          class="pull-right btn btn-secondary"
-        >
-          Cancel
-        </button>
-        <button class="pull-right btn btn-black">Submit</button>
-
-        <br />
-        <hr />
-        <span class="sss"
-          >Do you want to see schedule ?
-          <a routerLink="/schedule">schedule</a></span
-        >
+        <div class="buttons">
+          <div class="form-button cancel-button">
+            <button class="btn btn-black">Submit</button>
+          </div>
+          <div class="form-button submit-button">
+            <button
+              type="button"
+              (click)="onCancel()"
+              class="btn btn-secondary"
+            >
+              Cancel
+            </button>
+          </div>
+        </div>
       </form>
+      <div>
+        <hr />
+        <div class="sss"
+          >Do you want to see schedule ?
+          <a routerLink="/schedule">schedule</a></div
+        >
+      </div>
     </div>
   </div>
 </div>

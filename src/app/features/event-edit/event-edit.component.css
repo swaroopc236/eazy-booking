@@ -67,10 +67,38 @@ body {
   font-weight: 300;
 }
 
+.logo {
+  margin: 20px;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.content-info {
+  margin-top: 15%;
+  margin-left: 10%;
+
+}
+
 .btn-black {
   background-color: #000 !important;
   color: #fff;
 }
 .sss {
-  margin-top: 20%;
+  text-align: center;
+  /* margin-top: 20%; */
+}
+
+.buttons {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.btn {
+  margin: 5px;
+}
+
+.btn-secondary {
+  margin-right: 0;
 }
