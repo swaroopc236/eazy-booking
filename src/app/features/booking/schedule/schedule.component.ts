@@ -132,6 +132,7 @@ export class ScheduleComponent implements OnInit, AfterViewInit {
     this.roomEventsDetail = [];
     this.roomEvents.filter((e: any) => {
       if (e.eventDetails) {
+        e.eventDetails.description = e.userName;
         this.roomEventsDetail.push(e.eventDetails);
       }
     });
@@ -204,6 +205,7 @@ export class ScheduleComponent implements OnInit, AfterViewInit {
         this.cookieService.delete('user');
         this.isUserLoggedIn = false;
         this.isAdmin = false;
+        this.router.navigate(['/login']);
       },
       (err) => {
         console.log('Error while logging out', err);
